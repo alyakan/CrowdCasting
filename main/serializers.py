@@ -2,17 +2,19 @@ from rest_framework import serializers
 from main.models import Actor, Experience
 
 
-class ActorSeriealizer(serializers.HyperlinkedModelSerializer):
-    experiences = serializers.StringRelatedField(many=True)
+class ActorSerializer(serializers.HyperlinkedModelSerializer):
+    # experiences = serializers.StringRelatedField(many=True)
+    experiences = serializers.HyperlinkedRelatedField(
+        many=True, view_name='experience-detail', read_only=True)
 
     class Meta:
         model = Actor
-        fields = ('experiences')
+        fields = ('url', 'experiences')
 
 
-class ExperienceSerializer(serializers.ModelSerializer):
-    actor = serializers.ReadOnlyField('actor.username')
+class ExperienceSerializer(serializers.HyperlinkedModelSerializer):
+    actor = serializers.ReadOnlyField(source='actor.id')
 
     class Meta:
         model = Experience
-        fields = ('actor, experience')
+        fields = ('url', 'actor', 'experience')
