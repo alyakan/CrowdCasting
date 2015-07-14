@@ -9,3 +9,6 @@ class Actor(models.Model):
 class Experience(models.Model):
     experience = models.CharField(max_length=200)
     actor = models.ForeignKey(Actor, related_name='experiences')
+
+    def __unicode__(self):
+        return unicode(self.experience)
