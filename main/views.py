@@ -3,6 +3,7 @@ from rest_framework import viewsets, permissions
 from main.serializers import (
     ActorSerializer, ExperienceSerializer, ContactInfoSerializer)
 from main.permissions import IsOwnerOrReadOnly
+from rest_framework import serializers
 
 
 class ActorViewSet(viewsets.ReadOnlyModelViewSet):
@@ -38,4 +39,11 @@ class ContactInfoViewSet(viewsets.ModelViewSet):
             actor=Actor.objects.get(user=self.request.user))
 
     def perform_create(self, serializer):
-        serializer.save(actor=Actor.objects.get(user=self.request.user))
+        queryset = ContactInfo.objects.filter(
+            actor=Actor.objects.get(user=self.request.user))
+
+        if queryset.count() > 0:
+            raise serializers.ValidationError(
+                'You are only allowed to post one phone number.')
+        else:
+            serializer.save(actor=Actor.objects.get(user=self.request.user))
