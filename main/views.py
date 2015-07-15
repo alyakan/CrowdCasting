@@ -1,19 +1,26 @@
+
+from main.models import (
+    Actor, Experience,
+    ContactInfo, HeadShots,
+    Trial, RequestAccountNotification,
+    ProfilePicture)
+from rest_framework import viewsets, permissions
+from rest_framework import serializers
 from main.serializers import(
     HeadShotsSerializer,
     TrialSerializer,
     UserSerializer,
     ActorSerializer,
     ExperienceSerializer,
-    ProfilePictureSerializer
+    ProfilePictureSerializer,
+    RequestAccountNotificationSerializer,
+    ContactInfoSerializer,
 )
 from main import permissions as myPermissions
-from main.models import HeadShots, Trial
 from rest_framework.response import Response
 # from rest_framework import status
 # from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
-from main.models import Actor, Experience, ProfilePicture
-from rest_framework import viewsets, permissions
 from django.contrib.auth import authenticate, login
 
 
@@ -96,9 +103,18 @@ class TrialViewSet(viewsets.ViewSet):
 
 
 class ActorViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Actor.objects.all()
     serializer_class = ActorSerializer
     permission_classes = (permissions.IsAuthenticated,)
+
+    def get_queryset(self):
+        if self.request.user and self.request.user.is_staff:
+            return Actor.objects.all()
+        elif self.request.user.is_authenticated():
+            return Actor.objects.filter(
+                id=Actor.objects.get(
+                    user_id=self.request.user.id).id)
+        else:
+            return Actor.objects.none()
 
 
 class ProfilePictureViewSet(viewsets.ModelViewSet):
@@ -113,10 +129,59 @@ class ProfilePictureViewSet(viewsets.ModelViewSet):
 
 
 class ExperienceViewSet(viewsets.ModelViewSet):
-    queryset = Experience.objects.all()
     serializer_class = ExperienceSerializer
     permission_classes = (
         permissions.IsAuthenticated, myPermissions.IsOwnerOrReadOnly)
 
     def perform_create(self, serializer):
         serializer.save(actor=Actor.objects.get(id=self.request.user.id))
+
+    def get_queryset(self):
+        if self.request.user and self.request.user.is_staff:
+            return Experience.objects.all()
+        elif self.request.user.is_authenticated():
+            return Experience.objects.filter(
+                actor_id=Actor.objects.get(
+                    user_id=self.request.user.id))
+        else:
+            return Experience.objects.none()
+
+
+class RequestAccountViewSet(viewsets.ModelViewSet):
+    queryset = RequestAccountNotification.objects.all()
+    serializer_class = RequestAccountNotificationSerializer
+    permission_classes = (myPermissions.IsSuperUserOrTargetUser,)
+
+    def get_queryset(self):
+        if self.request.user and self.request.user.is_superuser:
+            return RequestAccountNotification.objects.all()
+        else:
+            return RequestAccountNotification.objects.none()
+
+
+class ContactInfoViewSet(viewsets.ModelViewSet):
+    """
+    This is a list of all phone numbers for the currently signed in user
+    author: Nourhan
+    """
+    serializer_class = ContactInfoSerializer
+    permission_classes = (permissions.IsAuthenticated,)
+    lookup_field = 'pk'
+
+    def get_queryset(self):
+        """
+        This view should return the contact info
+        for the currently authenticated user.
+        """
+        return ContactInfo.objects.filter(
+            actor=Actor.objects.get(user=self.request.user))
+
+    def perform_create(self, serializer):
+        queryset = ContactInfo.objects.filter(
+            actor=Actor.objects.get(user=self.request.user))
+
+        if queryset.count() > 0:
+            raise serializers.ValidationError(
+                'You are only allowed to post one phone number.')
+        else:
+            serializer.save(actor=Actor.objects.get(user=self.request.user))

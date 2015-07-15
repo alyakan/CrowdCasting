@@ -36,6 +36,20 @@ class UserIsAuthenticated(permissions.BasePermission):
         return obj.actor.id == request.user.id
 
 
+class IsSuperUserOrTargetUser(permissions.BasePermission):
+
+    def has_permission(self, request, view):
+        if request.user and request.user.is_authenticated():
+            return request.method in permissions.SAFE_METHODS
+        else:
+            return True
+
+    def has_object_permission(self, request, view, obj):
+        if request.method in permissions.SAFE_METHODS:
+            return True
+        return obj.actor.id == request.user.id
+
+
 class IsPhotoUploaded(permissions.BasePermission):
 
     def has_permission(self, request, view):
@@ -60,3 +74,4 @@ class IsPhotoUploaded(permissions.BasePermission):
             return obj.actor_id == actor.id
         except:
             return False
+
