@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from main.models import Actor, Experience
+from main.models import Actor, Experience, Biography
 
 
 class ActorSerializer(serializers.HyperlinkedModelSerializer):
@@ -18,3 +18,17 @@ class ExperienceSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Experience
         fields = ('url', 'actor', 'experience')
+
+
+class BiographySerializer(serializers.HyperlinkedModelSerializer):
+
+    """
+    Serializer for Biography model.
+    Author: Kareem Tarek .
+    """
+    actor = serializers.ReadOnlyField(source='actor.id')
+
+    class Meta:
+        model = Biography
+        fields = ('url', 'actor', 'date_of_birth',
+                  'family_information', 'personal_life', 'place_of_birth')
