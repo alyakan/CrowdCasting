@@ -34,7 +34,7 @@ class Experience(models.Model):
 
 class RequestAccountNotification(models.Model):
     name = models.CharField(max_length=50)
-    email = models.CharField(max_length=100)
+    phone_number = models.CharField(max_length=100, blank=False)
 
 
 class ContactInfo(models.Model):
