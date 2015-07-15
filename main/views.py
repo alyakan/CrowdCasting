@@ -1,5 +1,8 @@
 
-from main.models import Actor, Experience, ContactInfo, HeadShots, Trial
+from main.models import (
+    Actor, Experience,
+    ContactInfo, HeadShots,
+    Trial, RequestAccountNotification)
 from rest_framework import viewsets, permissions
 from rest_framework import serializers
 from main.serializers import(
@@ -8,10 +11,10 @@ from main.serializers import(
     UserSerializer,
     ActorSerializer,
     ExperienceSerializer,
+    RequestAccountNotificationSerializer,
     ContactInfoSerializer
 )
 from main import permissions as myPermissions
-
 from rest_framework.response import Response
 from rest_framework import status
 from django.shortcuts import get_object_or_404
@@ -23,7 +26,7 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
 
     # def get_permissions(self):
-    #     # allow non-authenticated user to create via POST
+    # allow non-authenticated user to create via POST
     #     return (permissions.AllowAny() if self.request.method == 'POST'
     #             else myPermissions.IsStaffOrTargetUser()),
 
@@ -78,19 +81,49 @@ class TrialViewSet(viewsets.ViewSet):
 
 
 class ActorViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Actor.objects.all()
     serializer_class = ActorSerializer
     permission_classes = (permissions.IsAuthenticated,)
 
+    def get_queryset(self):
+        if self.request.user and self.request.user.is_staff:
+            return Actor.objects.all()
+        elif self.request.user.is_authenticated():
+            return Actor.objects.filter(
+                id=Actor.objects.get(
+                    user_id=self.request.user.id).id)
+        else:
+            return Actor.objects.none()
+
 
 class ExperienceViewSet(viewsets.ModelViewSet):
-    queryset = Experience.objects.all()
     serializer_class = ExperienceSerializer
     permission_classes = (
         permissions.IsAuthenticated, myPermissions.IsOwnerOrReadOnly)
 
     def perform_create(self, serializer):
-        serializer.save(actor=Actor.objects.get(user=self.request.user))
+        serializer.save(actor=Actor.objects.get(id=self.request.user.id))
+
+    def get_queryset(self):
+        if self.request.user and self.request.user.is_staff:
+            return Experience.objects.all()
+        elif self.request.user.is_authenticated():
+            return Experience.objects.filter(
+                actor_id=Actor.objects.get(
+                    user_id=self.request.user.id))
+        else:
+            return Experience.objects.none()
+
+
+class RequestAccountViewSet(viewsets.ModelViewSet):
+    queryset = RequestAccountNotification.objects.all()
+    serializer_class = RequestAccountNotificationSerializer
+    permission_classes = (myPermissions.IsSuperUserOrTargetUser,)
+
+    def get_queryset(self):
+        if self.request.user and self.request.user.is_superuser:
+            return RequestAccountNotification.objects.all()
+        else:
+            return RequestAccountNotification.objects.none()
 
 
 class ContactInfoViewSet(viewsets.ModelViewSet):

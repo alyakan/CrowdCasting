@@ -9,6 +9,7 @@ class Actor(models.Model):
         upload_to='actors/profile_pictures/',
         blank=True,
         null=True)
+    name = models.CharField(max_length=100)
 
 
 class HeadShots(models.Model):
@@ -29,6 +30,11 @@ class Experience(models.Model):
 
     def __unicode__(self):
         return unicode(self.experience)
+
+
+class RequestAccountNotification(models.Model):
+    name = models.CharField(max_length=50)
+    email = models.CharField(max_length=100)
 
 
 class ContactInfo(models.Model):

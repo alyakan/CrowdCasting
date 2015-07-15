@@ -1,5 +1,8 @@
 from rest_framework import serializers
-from main.models import Actor, Experience, ContactInfo, HeadShots, Trial
+from main.models import (
+    Actor, Experience,
+    ContactInfo, HeadShots,
+    Trial, RequestAccountNotification)
 from django.contrib.auth.models import User
 
 
@@ -34,12 +37,13 @@ class UserSerializer(serializers.ModelSerializer):
         user = super(UserSerializer, self).create(attrs)
         user.set_password(attrs['password'])
         user.save()
-        Actor.objects.create(user_id=user.id)
+        Actor.objects.create(
+            user_id=user.id,
+            name=user.first_name+" "+user.last_name)
         return user
 
 
 class ActorSerializer(serializers.HyperlinkedModelSerializer):
-    # experiences = serializers.StringRelatedField(many=True)
     experiences = serializers.HyperlinkedRelatedField(
         many=True, view_name='experience-detail', read_only=True)
     contactinfo = serializers.HyperlinkedRelatedField(
@@ -47,7 +51,7 @@ class ActorSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Actor
-        fields = ('url', 'experiences', 'contactinfo')
+        fields = ('url', 'name', 'experiences', 'contactinfo')
 
 
 class ExperienceSerializer(serializers.HyperlinkedModelSerializer):
@@ -56,6 +60,14 @@ class ExperienceSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Experience
         fields = ('url', 'actor', 'experience')
+
+
+class RequestAccountNotificationSerializer(
+        serializers.HyperlinkedModelSerializer):
+
+    class Meta:
+        model = RequestAccountNotification
+        fields = ['name', 'email']
 
 
 class ContactInfoSerializer(serializers.HyperlinkedModelSerializer):
