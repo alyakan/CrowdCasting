@@ -21,7 +21,7 @@ class ContactInfo(models.Model):
         message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")
     phone_number = models.CharField(
         validators=[phone_regex], blank=True, max_length=100)
-    actor = models.ForeignKey(Actor, related_name='ContactInfo')
+    actor = models.ForeignKey(Actor, related_name='contactinfo')
 
     def __unicode__(self):
         return unicode(self.phone_number)

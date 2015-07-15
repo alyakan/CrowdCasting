@@ -6,10 +6,12 @@ class ActorSerializer(serializers.HyperlinkedModelSerializer):
     # experiences = serializers.StringRelatedField(many=True)
     experiences = serializers.HyperlinkedRelatedField(
         many=True, view_name='experience-detail', read_only=True)
+    contactinfo = serializers.HyperlinkedRelatedField(
+        many=True, view_name='contactinfo-detail', read_only=True)
 
     class Meta:
         model = Actor
-        fields = ('url', 'experiences')
+        fields = ('url', 'experiences', 'contactinfo')
 
 
 class ExperienceSerializer(serializers.HyperlinkedModelSerializer):

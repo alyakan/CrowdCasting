@@ -25,9 +25,16 @@ class ContactInfoViewSet(viewsets.ModelViewSet):
     creates a viewset for the contactinfo models
     author: Nourhan
     """
-    queryset = ContactInfo.objects.all()
     serializer_class = ContactInfoSerializer
     permission_classes = (permissions.IsAuthenticated, IsOwnerOrReadOnly)
+    lookup_field = 'pk'
+
+    def get_queryset(self):
+        """
+        This view should return the contact info
+        for the currently authenticated user.
+        """
+        return ContactInfo.objects.filter(actor=Actor.objects.get(user=self.request.user))
 
     def perform_create(self, serializer):
-        serializer.save(actor=Actor.objects.get(id=self.request.user.id))
+        serializer.save(actor=Actor.objects.get(user=self.request.user))

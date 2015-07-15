@@ -21,7 +21,7 @@ from main.views import ActorViewSet, ExperienceViewSet, ContactInfoViewSet
 router = DefaultRouter()
 router.register(r'actor', ActorViewSet)
 router.register(r'experience', ExperienceViewSet)
-router.register(r'contactinfo', ContactInfoViewSet)
+router.register(r'contactinfo', ContactInfoViewSet, base_name='contactinfo')
 
 urlpatterns = [
     url(r'^', include(router.urls)),

@@ -34,7 +34,7 @@ urlpatterns = format_suffix_patterns([
     url(r'^experience/(?P<pk>[0-9]+)/$',
         experience_detail, name='experience_detail'),
     url(r'^contactinfo/(?P<pk>[0-9]+)/$',
-        contactinfo_detail, name='contactinfo_detail'),
+        contactinfo_detail, name='contactinfo-detail'),
 ])
 
 
