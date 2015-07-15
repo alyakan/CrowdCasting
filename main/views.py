@@ -13,6 +13,7 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
 from main.models import Actor, Experience
 from rest_framework import viewsets, permissions
+from django.contrib.auth import authenticate, login
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -20,9 +21,18 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
 
     # def get_permissions(self):
-    #     # allow non-authenticated user to create via POST
+    # allow non-authenticated user to create via POST
     #     return (permissions.AllowAny() if self.request.method == 'POST'
     #             else myPermissions.IsStaffOrTargetUser()),
+
+    def perform_create(self, serializer):
+        password = serializer.data['password']
+        username = serializer.data['username']
+        serializer.save()
+        user = authenticate(
+            username=username,
+            password=password)
+        login(self.request, user)
 
 
 # class HeadShotsViewSet(viewsets.ViewSet):
@@ -42,9 +52,9 @@ class UserViewSet(viewsets.ModelViewSet):
 #         if serializer.is_valid():
 #             serializer.save(user_id=self.request.user.id)
 #             return Response(serializer.data, status=status.HTTP_201_CREATED)
-#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+# return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-#     # @detail_route(methods=['get'])
+# @detail_route(methods=['get'])
 #     def retrieve(self, request, pk=None):
 #         queryset = HeadShots.objects.all()
 #         image = get_object_or_404(queryset, pk=pk)
