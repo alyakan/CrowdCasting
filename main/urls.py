@@ -7,8 +7,9 @@ router = DefaultRouter()
 router.register(r'head_shots', views.HeadShotsViewSet)
 router.register(r'trial', views.TrialViewSet)
 router.register(r'user', views.UserViewSet)
-router.register(r'actor', views.ActorViewSet)
-router.register(r'experience', views.ExperienceViewSet)
+router.register(r'actor', views.ActorViewSet, base_name='actor')
+router.register(r'experience', views.ExperienceViewSet, base_name='experience')
+router.register(r'request_account', views.RequestAccountViewSet)
 
 experience_detail = views.ExperienceViewSet.as_view({
     'get': 'retrieve',
