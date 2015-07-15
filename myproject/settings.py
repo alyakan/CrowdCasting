@@ -12,9 +12,9 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
-
+import socket
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+DEPLOYED = socket.gethostname().endswith('webfaction.com')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
@@ -37,9 +37,8 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'main',
     'rest_framework',
-
+    'main',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -102,4 +101,19 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
+PROJECT_DIR = os.path.abspath(os.path.dirname(__file__))
+
+STATIC_PATH = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
+if DEPLOYED:
+    STATIC_ROOT = os.path.join(BASE_DIR, '../../sweet_recipes_static')
+else:
+    STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
+
+STATICFILES_DIRS = (STATIC_PATH,)
+
+MEDIA_URL = '/media/'
+if DEPLOYED:
+    MEDIA_ROOT = os.path.join(STATIC_ROOT, 'media')
+else:
+    MEDIA_ROOT = os.path.join(BASE_DIR, "media")

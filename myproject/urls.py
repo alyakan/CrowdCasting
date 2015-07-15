@@ -14,18 +14,17 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include(blog_urls))
 """
 from django.conf.urls import include, url
+from django.conf.urls.static import static
+from myproject import settings
 from django.contrib import admin
-from rest_framework.routers import DefaultRouter
-from main.views import ActorViewSet, ExperienceViewSet, ContactInfoViewSet
 
-router = DefaultRouter()
-router.register(r'actor', ActorViewSet)
-router.register(r'experience', ExperienceViewSet)
-router.register(r'contactinfo', ContactInfoViewSet, base_name='contactinfo')
 
 urlpatterns = [
-    url(r'^', include(router.urls)),
+    url(r'^media/(?P<path>.*)$',
+        'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^', include('main.urls')),
     url(r'^api-auth/',
         include('rest_framework.urls', namespace='rest_framework')),
-]
+    ] + static(
+        settings.STATIC_URL, document_root=settings.STATIC_ROOT)
