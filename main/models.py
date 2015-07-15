@@ -11,7 +11,7 @@ class Actor(models.Model):
 
 
 class HeadShots(models.Model):
-    # user = models.ForeignKey(Actor)
+    user = models.ForeignKey(Actor)
     image = models.ImageField(
         upload_to='actors/head_shots/',
         blank=True,
@@ -19,6 +19,7 @@ class HeadShots(models.Model):
 
 
 class Trial(models.Model):
+    user = models.ForeignKey(Actor)
     name = models.CharField(max_length=100)
 
 
