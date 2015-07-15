@@ -4,6 +4,10 @@ from main.models import (
     ContactInfo, HeadShots,
     Trial, RequestAccountNotification)
 from django.contrib.auth.models import User
+<<<<<<< HEAD
+from main.models import Actor, Experience, ProfilePicture
+=======
+>>>>>>> master
 
 
 class HeadShotsSerializer(serializers.HyperlinkedModelSerializer):
@@ -26,7 +30,7 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = (
             'username', 'password', 'first_name', 'last_name', 'email',)
-        write_only_fields = ('password',)
+        # write_only_fields = ('password',)
         read_only_fields = (
             'is_staff', 'is_superuser', 'is_active', 'date_joined',)
 
@@ -44,6 +48,11 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class ActorSerializer(serializers.HyperlinkedModelSerializer):
+
+    # experiences = serializers.StringRelatedField(many=True)
+    # profile_picture = serializers.HyperlinkedRelatedField(
+    #     many=True, view_name='experience-detail', read_only=True)
+
     experiences = serializers.HyperlinkedRelatedField(
         many=True, view_name='experience-detail', read_only=True)
     contactinfo = serializers.HyperlinkedRelatedField(
@@ -60,6 +69,14 @@ class ExperienceSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Experience
         fields = ('url', 'actor', 'experience')
+
+
+class ProfilePictureSerializer(serializers.HyperlinkedModelSerializer):
+    actor = serializers.ReadOnlyField(source='actor.id')
+
+    class Meta:
+        model = ProfilePicture
+        fields = ('url', 'actor', 'profile_picture',)
 
 
 class RequestAccountNotificationSerializer(
