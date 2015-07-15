@@ -1,13 +1,18 @@
-from django.shortcuts import render
-from rest_framework import viewsets
-from main.serializers import HeadShotsSerializer, TrialSerializer, UserSerializer
+from main.serializers import(
+    HeadShotsSerializer,
+    TrialSerializer,
+    UserSerializer,
+    ActorSerializer,
+    ExperienceSerializer
+)
+from main import permissions as myPermissions
 from main.models import HeadShots, Trial
 from rest_framework.response import Response
 from rest_framework import status
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
-from rest_framework.permissions import AllowAny
-from .permissions import IsStaffOrTargetUser
+from main.models import Actor, Experience
+from rest_framework import viewsets, permissions
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -16,8 +21,8 @@ class UserViewSet(viewsets.ModelViewSet):
 
     # def get_permissions(self):
     #     # allow non-authenticated user to create via POST
-    #     return (AllowAny() if self.request.method == 'POST'
-    #             else IsStaffOrTargetUser()),
+    #     return (permissions.AllowAny() if self.request.method == 'POST'
+    #             else myPermissions.IsStaffOrTargetUser()),
 
 
 class HeadShotsViewSet(viewsets.ViewSet):
@@ -67,3 +72,19 @@ class TrialViewSet(viewsets.ViewSet):
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
+
+
+class ActorViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Actor.objects.all()
+    serializer_class = ActorSerializer
+    permission_classes = (permissions.IsAuthenticated,)
+
+
+class ExperienceViewSet(viewsets.ModelViewSet):
+    queryset = Experience.objects.all()
+    serializer_class = ExperienceSerializer
+    permission_classes = (
+        permissions.IsAuthenticated, myPermissions.IsOwnerOrReadOnly)
+
+    def perform_create(self, serializer):
+        serializer.save(actor=Actor.objects.get(id=self.request.user.id))
