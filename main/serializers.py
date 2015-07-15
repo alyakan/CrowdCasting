@@ -67,7 +67,7 @@ class RequestAccountNotificationSerializer(
 
     class Meta:
         model = RequestAccountNotification
-        fields = ['name', 'email']
+        fields = ['name', 'phone_number']
 
 
 class ContactInfoSerializer(serializers.HyperlinkedModelSerializer):
