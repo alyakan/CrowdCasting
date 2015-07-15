@@ -3,15 +3,16 @@ from main.serializers import(
     TrialSerializer,
     UserSerializer,
     ActorSerializer,
-    ExperienceSerializer
+    ExperienceSerializer,
+    ProfilePictureSerializer
 )
 from main import permissions as myPermissions
 from main.models import HeadShots, Trial
 from rest_framework.response import Response
-from rest_framework import status
-from django.shortcuts import get_object_or_404
+# from rest_framework import status
+# from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
-from main.models import Actor, Experience
+from main.models import Actor, Experience, ProfilePicture
 from rest_framework import viewsets, permissions
 from django.contrib.auth import authenticate, login
 
@@ -19,6 +20,13 @@ from django.contrib.auth import authenticate, login
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    permission_classes = (myPermissions.UserIsAuthenticated,)
+
+    def get_queryset(self):
+        if self.request.user.is_superuser:
+            return User.objects.all()
+        else:
+            return User.objects.filter(id=self.request.user.id)
 
     # def get_permissions(self):
     # allow non-authenticated user to create via POST
@@ -91,6 +99,17 @@ class ActorViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Actor.objects.all()
     serializer_class = ActorSerializer
     permission_classes = (permissions.IsAuthenticated,)
+
+
+class ProfilePictureViewSet(viewsets.ModelViewSet):
+    queryset = ProfilePicture.objects.all()
+    serializer_class = ProfilePictureSerializer
+    permission_classes = (
+        myPermissions.IsPhotoUploaded,)
+
+    def perform_create(self, serializer):
+        actor = Actor.objects.get(user_id=self.request.user.id)
+        serializer.save(actor_id=actor.id)
 
 
 class ExperienceViewSet(viewsets.ModelViewSet):

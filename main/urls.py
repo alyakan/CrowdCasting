@@ -9,6 +9,7 @@ router.register(r'trial', views.TrialViewSet)
 router.register(r'user', views.UserViewSet)
 router.register(r'actor', views.ActorViewSet)
 router.register(r'experience', views.ExperienceViewSet)
+router.register(r'profile_pictures', views.ProfilePictureViewSet)
 
 experience_detail = views.ExperienceViewSet.as_view({
     'get': 'retrieve',

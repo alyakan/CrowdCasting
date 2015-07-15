@@ -4,10 +4,6 @@ from django.contrib.auth.models import User
 
 class Actor(models.Model):
     user = models.OneToOneField(User)
-    profile_picture = models.ImageField(
-        upload_to='actors/profile_pictures/',
-        blank=True,
-        null=True)
 
 
 class HeadShots(models.Model):
@@ -29,3 +25,11 @@ class Experience(models.Model):
 
     def __unicode__(self):
         return unicode(self.experience)
+
+
+class ProfilePicture(models.Model):
+    actor = models.OneToOneField(Actor)
+    profile_picture = models.ImageField(
+        upload_to='actors/profile_pictures/',
+        blank=True,
+        null=True)

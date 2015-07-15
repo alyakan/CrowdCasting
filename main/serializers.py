@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from main.models import HeadShots, Trial
 from django.contrib.auth.models import User
-from main.models import Actor, Experience
+from main.models import Actor, Experience, ProfilePicture
 
 
 class HeadShotsSerializer(serializers.HyperlinkedModelSerializer):
@@ -41,6 +41,8 @@ class UserSerializer(serializers.ModelSerializer):
 
 class ActorSerializer(serializers.HyperlinkedModelSerializer):
     # experiences = serializers.StringRelatedField(many=True)
+    # profile_picture = serializers.HyperlinkedRelatedField(
+    #     many=True, view_name='experience-detail', read_only=True)
     experiences = serializers.HyperlinkedRelatedField(
         many=True, view_name='experience-detail', read_only=True)
 
@@ -55,3 +57,11 @@ class ExperienceSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Experience
         fields = ('url', 'actor', 'experience')
+
+
+class ProfilePictureSerializer(serializers.HyperlinkedModelSerializer):
+    actor = serializers.ReadOnlyField(source='actor.id')
+
+    class Meta:
+        model = ProfilePicture
+        fields = ('url', 'actor', 'profile_picture',)
