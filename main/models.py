@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.validators import RegexValidator
 
 
 class Actor(models.Model):
@@ -34,3 +35,15 @@ class Experience(models.Model):
 class RequestAccountNotification(models.Model):
     name = models.CharField(max_length=50)
     email = models.CharField(max_length=100)
+
+
+class ContactInfo(models.Model):
+    phone_regex = RegexValidator(
+        regex=r'^\+?1?\d{9,15}$',
+        message="Phone number format: '+999999999'. Up to 15 digits allowed.")
+    phone_number = models.CharField(
+        validators=[phone_regex], blank=False, max_length=100)
+    actor = models.ForeignKey(Actor, related_name='contactinfo')
+
+    def __unicode__(self):
+        return unicode(self.phone_number)

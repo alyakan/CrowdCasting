@@ -1,7 +1,10 @@
 from rest_framework import serializers
-from main.models import HeadShots, Trial
+from main.models import Actor, Experience, ContactInfo, HeadShots, Trial
 from django.contrib.auth.models import User
+<<<<<<< HEAD
 from main.models import Actor, Experience, RequestAccountNotification
+=======
+>>>>>>> master
 
 
 class HeadShotsSerializer(serializers.HyperlinkedModelSerializer):
@@ -44,10 +47,12 @@ class UserSerializer(serializers.ModelSerializer):
 class ActorSerializer(serializers.HyperlinkedModelSerializer):
     experiences = serializers.HyperlinkedRelatedField(
         many=True, view_name='experience-detail', read_only=True)
+    contactinfo = serializers.HyperlinkedRelatedField(
+        many=True, view_name='contactinfo-detail', read_only=True)
 
     class Meta:
         model = Actor
-        fields = ('url', 'name', 'experiences')
+        fields = ('url', 'name', 'experiences', 'contactinfo')
 
 
 class ExperienceSerializer(serializers.HyperlinkedModelSerializer):
@@ -64,3 +69,15 @@ class RequestAccountNotificationSerializer(
     class Meta:
         model = RequestAccountNotification
         fields = ['name', 'email']
+
+
+class ContactInfoSerializer(serializers.HyperlinkedModelSerializer):
+    """
+    serializes the contact info model data
+    author: Nourhan
+    """
+    actor = serializers.ReadOnlyField(source='actor.id')
+
+    class Meta:
+        model = ContactInfo
+        fields = ('url', 'actor', 'phone_number')
