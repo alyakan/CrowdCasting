@@ -42,7 +42,6 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class ActorSerializer(serializers.HyperlinkedModelSerializer):
-    # experiences = serializers.StringRelatedField(many=True)
     experiences = serializers.HyperlinkedRelatedField(
         many=True, view_name='experience-detail', read_only=True)
 
