@@ -3,6 +3,7 @@ from main.models import (
     Actor, Experience,
     ContactInfo, HeadShots,
     Trial, RequestAccountNotification,
+    RequestContactInfo,
     ProfilePicture)
 from rest_framework import viewsets, permissions
 from rest_framework import serializers
@@ -15,6 +16,8 @@ from main.serializers import(
     ProfilePictureSerializer,
     RequestAccountNotificationSerializer,
     ContactInfoSerializer,
+    RequestContactInfoSerializer,
+
 )
 from main import permissions as myPermissions
 from rest_framework.response import Response
@@ -158,6 +161,49 @@ class RequestAccountViewSet(viewsets.ModelViewSet):
             return RequestAccountNotification.objects.all()
         else:
             return RequestAccountNotification.objects.none()
+
+
+class RequestContactInfoViewSet(viewsets.ModelViewSet):
+    queryset = RequestContactInfo.objects.all()
+    serializer_class = RequestContactInfoSerializer
+    permission_classes = (
+        permissions.IsAuthenticated, myPermissions.IsStaffOrTargetUser)
+
+    def get_queryset(self):
+        if self.request.user and self.request.user.is_superuser:
+            return RequestContactInfo.objects.filter(sender=self.request.user)
+        else:
+            return
+
+    def perform_create(self, serializer):
+        requests = RequestContactInfo.objects.all()
+        actor_username = self.request.data['actor_username']
+        users = User.objects.all()
+
+        for r in requests:
+            if ((r.sender == self.request.user) and
+               (r.actor_username == actor_username)):
+                raise serializers.ValidationError(
+                    'You have already sent a request to this actor.')
+        if self.request.user.username == actor_username:
+            raise serializers.ValidationError(
+                        'You cannot send a request to yourself.')
+        try:
+            user = User.objects.get(username=actor_username)
+        except:
+            raise serializers.ValidationError(
+                            'This username is invalid. Please try again.')
+        if user.is_staff:
+            print "sdaads"
+            raise serializers.ValidationError(
+                'You cannot send a request to another director.')
+
+        for u in users:
+            if u.username == actor_username:
+                serializer.save(sender=self.request.user)
+                return
+        raise serializers.ValidationError(
+                            'This username is invalid. Please try again.')
 
 
 class ContactInfoViewSet(viewsets.ModelViewSet):

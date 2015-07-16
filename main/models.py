@@ -41,6 +41,11 @@ class RequestAccountNotification(models.Model):
     phone_number = models.CharField(max_length=100, blank=False)
 
 
+class RequestContactInfo(models.Model):
+    sender = models.ForeignKey(User, related_name='requestcontactinfo')
+    actor_username = models.CharField(max_length=100)
+
+
 class ContactInfo(models.Model):
     phone_regex = RegexValidator(
         regex=r'^\+?1?\d{9,15}$',
