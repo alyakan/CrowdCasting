@@ -176,31 +176,34 @@ class RequestContactInfoViewSet(viewsets.ModelViewSet):
             return
 
     def perform_create(self, serializer):
-        users = User.objects.all()
         requests = RequestContactInfo.objects.all()
         actor_username = self.request.data['actor_username']
+        users = User.objects.all()
 
         for r in requests:
             if ((r.sender == self.request.user) and
                (r.actor_username == actor_username)):
                 raise serializers.ValidationError(
                     'You have already sent a request to this actor.')
-            else:
-                if self.request.user.username == actor_username:
-                    raise serializers.ValidationError(
+        if self.request.user.username == actor_username:
+            raise serializers.ValidationError(
                         'You cannot send a request to yourself.')
-                else:
-                    user = User.objects.get(username=actor_username)
-                    if user.is_staff:
-                        raise serializers.ValidationError(
-                            'You cannot send a request to another director.')
+        try:
+            user = User.objects.get(username=actor_username)
+        except:
+            raise serializers.ValidationError(
+                            'This username is invalid. Please try again.')
+        if user.is_staff:
+            print "sdaads"
+            raise serializers.ValidationError(
+                'You cannot send a request to another director.')
 
         for u in users:
             if u.username == actor_username:
                 serializer.save(sender=self.request.user)
                 return
         raise serializers.ValidationError(
-                'This username is invalid. Please try again.')
+                            'This username is invalid. Please try again.')
 
 
 class ContactInfoViewSet(viewsets.ModelViewSet):
