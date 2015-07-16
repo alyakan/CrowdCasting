@@ -6,6 +6,7 @@ from django.core.validators import RegexValidator
 class Actor(models.Model):
     user = models.OneToOneField(User)
 
+
 class HeadShots(models.Model):
     user = models.ForeignKey(Actor)
     image = models.ImageField(

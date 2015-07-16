@@ -79,6 +79,7 @@ class UserViewSet(viewsets.ModelViewSet):
 class HeadShotsViewSet(viewsets.ModelViewSet):
     queryset = HeadShots.objects.all()
     serializer_class = HeadShotsSerializer
+    # permission_classes = (permissions.IsOwnerOrReadOnly,)
 
     def perform_create(self, serializer):
         serializer.save(user_id=self.request.user.id)
