@@ -4,6 +4,7 @@ from django.core.validators import RegexValidator
 
 
 class Actor(models.Model):
+    name = models.CharField(max_length=200)
     user = models.OneToOneField(User)
 
 
