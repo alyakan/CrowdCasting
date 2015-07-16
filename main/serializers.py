@@ -2,12 +2,9 @@ from rest_framework import serializers
 from main.models import (
     Actor, Experience,
     ContactInfo, HeadShots,
-    Trial, RequestAccountNotification)
+    Trial, RequestAccountNotification,
+    ProfilePicture)
 from django.contrib.auth.models import User
-<<<<<<< HEAD
-from main.models import Actor, Experience, ProfilePicture
-=======
->>>>>>> master
 
 
 class HeadShotsSerializer(serializers.HyperlinkedModelSerializer):
