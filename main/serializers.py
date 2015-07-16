@@ -2,7 +2,8 @@ from rest_framework import serializers
 from main.models import (
     Actor, Experience,
     ContactInfo, HeadShots,
-    Trial, RequestAccountNotification)
+    Trial, RequestAccountNotification,
+    RequestContactInfo)
 from django.contrib.auth.models import User
 
 
@@ -80,3 +81,16 @@ class ContactInfoSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = ContactInfo
         fields = ('url', 'actor', 'phone_number')
+
+
+class RequestContactInfoSerializer(
+        serializers.HyperlinkedModelSerializer):
+    """
+    serializes the request contact info model data
+    author: Nourhan
+    """
+    sender = serializers.ReadOnlyField(source='user.id')
+
+    class Meta:
+        model = RequestContactInfo
+        fields = ['url', 'sender', 'actor_username']

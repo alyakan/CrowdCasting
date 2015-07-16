@@ -1,5 +1,7 @@
 from django.conf.urls import url, include
-from main.views import ActorViewSet, ExperienceViewSet, ContactInfoViewSet
+from main.views import (
+    ActorViewSet, ExperienceViewSet, ContactInfoViewSet,
+    RequestContactInfoViewSet)
 from main import views
 from rest_framework.routers import DefaultRouter
 
@@ -38,6 +40,11 @@ experience_detail = ExperienceViewSet.as_view({
     'delete': 'destroy'
 })
 
+request_contactinfo = RequestContactInfoViewSet.as_view({
+    'get': 'retrieve',
+    'delete': 'destroy'
+})
+
 router = DefaultRouter()
 router.register(r'head_shots', views.HeadShotsViewSet)
 router.register(r'trial', views.TrialViewSet)
@@ -46,6 +53,7 @@ router.register(r'actor', views.ActorViewSet, base_name='actor')
 router.register(r'experience', views.ExperienceViewSet, base_name='experience')
 router.register(r'request_account', views.RequestAccountViewSet)
 router.register(r'contactinfo', ContactInfoViewSet, base_name='contactinfo')
+router.register(r'request_contactinfo', RequestContactInfoViewSet)
 
 urlpatterns = [
     url(r'^', include(router.urls)),
