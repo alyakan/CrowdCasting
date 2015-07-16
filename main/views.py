@@ -79,10 +79,12 @@ class UserViewSet(viewsets.ModelViewSet):
 class HeadShotsViewSet(viewsets.ModelViewSet):
     queryset = HeadShots.objects.all()
     serializer_class = HeadShotsSerializer
-    # permission_classes = (permissions.IsOwnerOrReadOnly,)
+    permission_classes = [
+        myPermissions.IsActorPermission,
+        myPermissions.IsOwnerOrReadOnly2]
 
     def perform_create(self, serializer):
-        serializer.save(user_id=self.request.user.id)
+        serializer.save(actor=Actor.objects.get(user_id=self.request.user.id))
 
 
 class TrialViewSet(viewsets.ViewSet):
@@ -122,7 +124,9 @@ class ProfilePictureViewSet(viewsets.ModelViewSet):
     queryset = ProfilePicture.objects.all()
     serializer_class = ProfilePictureSerializer
     permission_classes = (
-        myPermissions.IsPhotoUploaded,)
+        myPermissions.IsActorPermission,
+        myPermissions.IsPhotoUploaded,
+        myPermissions.IsOwnerOrReadOnly2)
 
     def perform_create(self, serializer):
         actor = Actor.objects.get(user_id=self.request.user.id)

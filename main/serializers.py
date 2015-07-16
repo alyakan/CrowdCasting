@@ -11,7 +11,7 @@ class HeadShotsSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = HeadShots
-        fields = ('image',)
+        fields = ('url', 'image',)
 
 
 class TrialSerializer(serializers.ModelSerializer):
@@ -57,7 +57,7 @@ class ActorSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Actor
-        fields = ('url', 'name', 'experiences', 'contactinfo')
+        fields = ('url', 'experiences', 'contactinfo')
 
 
 class ExperienceSerializer(serializers.HyperlinkedModelSerializer):
@@ -69,11 +69,10 @@ class ExperienceSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class ProfilePictureSerializer(serializers.HyperlinkedModelSerializer):
-    actor = serializers.ReadOnlyField(source='actor.id')
 
     class Meta:
         model = ProfilePicture
-        fields = ('url', 'actor', 'profile_picture',)
+        fields = ('url', 'profile_picture',)
 
 
 class RequestAccountNotificationSerializer(

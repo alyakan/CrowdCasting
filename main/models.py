@@ -8,7 +8,7 @@ class Actor(models.Model):
 
 
 class HeadShots(models.Model):
-    user = models.ForeignKey(Actor)
+    actor = models.ForeignKey(Actor)
     image = models.ImageField(
         upload_to='actors/head_shots/',
         blank=True,
