@@ -57,3 +57,13 @@ class ContactInfo(models.Model):
 
     def __unicode__(self):
         return unicode(self.phone_number)
+
+
+class Tag(models.Model):
+    """
+    Represents a single tag for an actor
+    Author: Aly Yakan
+    """
+    actor = models.ForeignKey(Actor)
+
+    tag = models.CharField(max_length=128)
