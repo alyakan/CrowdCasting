@@ -115,7 +115,7 @@ class RequestContactInfoSerializer(
 class TagSerializer(serializers.HyperlinkedModelSerializer):
     """
     Serializes the Tag model data
-    Author: Nourhan
+    Author: Aly Yakan
     """
     actor = serializers.ReadOnlyField(source='actor.username')
 
