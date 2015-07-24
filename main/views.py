@@ -4,7 +4,8 @@ from main.models import (
     ContactInfo, HeadShots,
     Trial, RequestAccountNotification,
     RequestContactInfo,
-    ProfilePicture)
+    ProfilePicture,
+    Tag)
 from rest_framework import viewsets, permissions
 from rest_framework import serializers
 from main.serializers import(
@@ -17,6 +18,7 @@ from main.serializers import(
     RequestAccountNotificationSerializer,
     ContactInfoSerializer,
     RequestContactInfoSerializer,
+    TagSerializer,
 
 )
 from main import permissions as myPermissions
@@ -232,3 +234,12 @@ class ContactInfoViewSet(viewsets.ModelViewSet):
                 'You are only allowed to post one phone number.')
         else:
             serializer.save(actor=Actor.objects.get(user=self.request.user))
+
+
+class TagViewSet(viewsets.ModelViewSet):
+    queryset = Tag.objects.all()
+    serializer_class = TagSerializer
+    # permission_classes = (permissions.IsOwnerOrReadOnly,)
+
+    def perform_create(self, serializer):
+        serializer.save(actor=Actor.objects.get(user=self.request.user))
