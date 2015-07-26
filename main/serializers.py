@@ -8,6 +8,8 @@ from main.models import (
     Tag)
 
 from django.contrib.auth.models import User
+from drf_haystack.serializers import HaystackSerializer
+from .search_indexes import ActorIndex
 
 
 class HeadShotsSerializer(serializers.HyperlinkedModelSerializer):
@@ -122,3 +124,19 @@ class TagSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Tag
         fields = ['url', 'tag', 'actor']
+
+
+class ActorSearchSerializer(HaystackSerializer):
+
+    class Meta:
+        # The `index_classes` attribute is a list of which search indexes
+        # we want to include in the search.
+        index_classes = [ActorIndex]
+
+        # The `fields` contains all the fields we want to include.
+        # NOTE: Make sure you don't confuse these with model attributes. These
+        # fields belong to the search index!
+        fields = [
+            "text", "name", 
+        ]
+

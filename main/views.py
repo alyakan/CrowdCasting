@@ -19,7 +19,7 @@ from main.serializers import(
     ContactInfoSerializer,
     RequestContactInfoSerializer,
     TagSerializer,
-
+    ActorSearchSerializer,
 )
 from main import permissions as myPermissions
 from rest_framework.response import Response
@@ -27,6 +27,7 @@ from rest_framework.response import Response
 # from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
+from drf_haystack.viewsets import HaystackViewSet
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -243,3 +244,14 @@ class TagViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(actor=Actor.objects.get(user=self.request.user))
+
+
+class ActorSearchView(HaystackViewSet):
+
+    # `index_models` is an optional list of which models you would like to include
+    # in the search result. You might have several models indexed, and this provides
+    # a way to filter out those of no interest for this particular view.
+    # (Translates to `SearchQuerySet().models(*index_models)` behind the scenes.
+    index_models = [Actor]
+
+    serializer_class = ActorSearchSerializer

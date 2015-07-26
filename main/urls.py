@@ -2,7 +2,7 @@ from django.conf.urls import url, include
 from main.views import (
     ActorViewSet, ExperienceViewSet, ContactInfoViewSet,
     RequestContactInfoViewSet,
-    TagViewSet)
+    TagViewSet, ActorSearchView)
 from main import views
 from rest_framework.routers import DefaultRouter
 
@@ -59,6 +59,7 @@ router.register(r'contactinfo', ContactInfoViewSet, base_name='contactinfo')
 router.register(r'request_contactinfo', RequestContactInfoViewSet)
 router.register(r'profile_pictures', views.ProfilePictureViewSet)
 router.register(r'tags', TagViewSet, base_name='tag')
+router.register(r'actor/search', views.ActorSearchView, base_name="actor-search")
 
 urlpatterns = [
     url(r'^', include(router.urls)),
