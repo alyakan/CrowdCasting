@@ -117,8 +117,8 @@ class TagSerializer(serializers.HyperlinkedModelSerializer):
     Serializes the Tag model data
     Author: Aly Yakan
     """
-    actor = serializers.ReadOnlyField(source='actor.username')
+    actor = serializers.ReadOnlyField(source='actor.name')
 
     class Meta:
         model = Tag
-        fields = ['url', 'sender', 'actor']
+        fields = ['url', 'tag', 'actor']
