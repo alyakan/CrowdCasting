@@ -4,7 +4,8 @@ from main.models import (
     ContactInfo, HeadShots,
     Trial, RequestAccountNotification,
     RequestContactInfo,
-    ProfilePicture)
+    ProfilePicture,
+    Tag)
 
 from django.contrib.auth.models import User
 
@@ -109,3 +110,15 @@ class RequestContactInfoSerializer(
     class Meta:
         model = RequestContactInfo
         fields = ['url', 'sender', 'actor_username']
+
+
+class TagSerializer(serializers.HyperlinkedModelSerializer):
+    """
+    Serializes the Tag model data
+    Author: Aly Yakan
+    """
+    actor = serializers.ReadOnlyField(source='actor.name')
+
+    class Meta:
+        model = Tag
+        fields = ['url', 'tag', 'actor']
