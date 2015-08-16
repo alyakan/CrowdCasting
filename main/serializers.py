@@ -37,13 +37,11 @@ class UserSerializer(serializers.ModelSerializer):
     def create(self, attrs):
         # call set_password on user object. Without this
         # the password will be stored in plain text.
-        print attrs
         user = super(UserSerializer, self).create(attrs)
         user.set_password(attrs['password'])
         user.save()
         Actor.objects.create(
-            user_id=user.id,
-            name=user.first_name+" "+user.last_name)
+            user_id=user.id)
         return user
 
 
@@ -60,7 +58,12 @@ class ActorSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Actor
-        fields = ('url', 'name', 'experiences', 'contactinfo')
+        fields = ('url', 'experiences', 'contactinfo', 'first_name',
+                  'middle_name', 'last_name', 'date_of_birth', 'gender',
+                  'height', 'weight', 'hair_color', 'eye_color', 'skin_color',
+                  'about_me', 'full_body_shot', 'profile_picture',
+                  'phone_number'
+                  )
 
 
 class ExperienceSerializer(serializers.HyperlinkedModelSerializer):
