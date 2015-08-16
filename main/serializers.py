@@ -41,8 +41,6 @@ class UserSerializer(serializers.ModelSerializer):
         user = super(UserSerializer, self).create(attrs)
         user.set_password(attrs['password'])
         user.save()
-        Actor.objects.create(
-            user_id=user.id)
         return user
 
 

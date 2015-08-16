@@ -67,6 +67,7 @@ router.register(r'request_contactinfo', RequestContactInfoViewSet)
 router.register(r'profile_pictures', views.ProfilePictureViewSet)
 router.register(r'tags', TagViewSet, base_name='tag')
 router.register(r'education', EducationViewSet, base_name='education')
+router.register(r'director', views.DirectorViewSet, base_name='director')
 
 
 urlpatterns = [

@@ -49,7 +49,28 @@ class UserViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         password = serializer.data['password']
         username = serializer.data['username']
-        serializer.save()
+        user = serializer.save()
+        Actor.objects.create(
+            user=user)
+        user = authenticate(
+            username=username,
+            password=password)
+        login(self.request, user)
+
+
+class DirectorViewSet(UserViewSet):
+    def get_queryset(self):
+        if self.request.user.is_superuser:
+            return User.objects.all()
+        else:
+            return User.objects.filter(id=self.request.user.id, is_staff=True)
+
+    def perform_create(self, serializer):
+        password = serializer.data['password']
+        username = serializer.data['username']
+        user = serializer.save()
+        user.is_staff = True
+        user.save()
         user = authenticate(
             username=username,
             password=password)
