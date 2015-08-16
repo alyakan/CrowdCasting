@@ -38,17 +38,16 @@ class UserSerializer(serializers.ModelSerializer):
     def create(self, attrs):
         # call set_password on user object. Without this
         # the password will be stored in plain text.
-        print attrs
         user = super(UserSerializer, self).create(attrs)
         user.set_password(attrs['password'])
         user.save()
-        # Actor.objects.create(
-        #     user_id=user.id,
-        #     name=user.first_name+" "+user.last_name)
+        Actor.objects.create(
+            user_id=user.id)
         return user
 
 
 class TagSerializer(serializers.ModelSerializer):
+
     """
     Serializes the Tag model data
     Author: Aly Yakan
@@ -60,12 +59,14 @@ class TagSerializer(serializers.ModelSerializer):
 
 
 class ExperienceSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Experience
         fields = ('id', 'experience',)
 
 
 class EducationSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Education
         fields = ('id', 'qualification',)
@@ -85,7 +86,12 @@ class ActorSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Actor
-        fields = ('url', 'name', 'experiences', 'contactinfo', 'tags', 'education')
+        fields = (
+            'url', 'first_name', 'middle_name', 'last_name', 'date_of_birth',
+            'gender', 'height', 'weight', 'hair_color', 'eye_color',
+            'skin_color', 'about_me', 'full_body_shot', 'profile_picture',
+            'experiences', 'phone_number', 'education', 'tags', 'contactinfo',
+        )
 
     def create(self, validated_data):
         experiences = validated_data.pop('experiences')
@@ -104,23 +110,31 @@ class ActorSerializer(serializers.HyperlinkedModelSerializer):
         return actor
 
     def update(self, instance, validated_data):
-        instance.name = validated_data['name']
-        instance.save()
+        experiences = validated_data.pop('experiences')
+        tags = validated_data.pop('tags')
+        educations = validated_data.pop('education')
+        actor = Actor.objects.get(
+            id=instance.id, user=self.context['request'].user)
+        actor = Actor(
+            id=instance.id,
+            user=self.context['request'].user,
+            **validated_data)
+        actor.save()
 
         Experience.objects.filter(actor=instance).delete()
-        for item in validated_data['experiences']:
+        for item in experiences:
             experience = Experience(
                 experience=item['experience'],
                 actor=instance)
             experience.save()
 
         Tag.objects.filter(actor=instance).delete()
-        for item in validated_data['tags']:
+        for item in tags:
             tag = Tag(tag=item['tag'], actor=instance)
             tag.save()
 
         Education.objects.filter(actor=instance).delete()
-        for item in validated_data['education']:
+        for item in educations:
             education = Education(
                 year=item['year'],
                 qualification=item['qualification'],
@@ -146,6 +160,7 @@ class RequestAccountNotificationSerializer(
 
 
 class ContactInfoSerializer(serializers.HyperlinkedModelSerializer):
+
     """
     serializes the contact info model data
     author: Nourhan
@@ -159,6 +174,7 @@ class ContactInfoSerializer(serializers.HyperlinkedModelSerializer):
 
 class RequestContactInfoSerializer(
         serializers.HyperlinkedModelSerializer):
+
     """
     serializes the request contact info model data
     author: Nourhan
@@ -168,15 +184,3 @@ class RequestContactInfoSerializer(
     class Meta:
         model = RequestContactInfo
         fields = ['url', 'sender', 'actor_username']
-
-
-class TagSerializer(serializers.HyperlinkedModelSerializer):
-    """
-    Serializes the Tag model data
-    Author: Aly Yakan
-    """
-    actor = serializers.ReadOnlyField(source='actor.name')
-
-    class Meta:
-        model = Tag
-        fields = ['url', 'tag', 'actor']
