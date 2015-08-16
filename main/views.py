@@ -5,7 +5,7 @@ from main.models import (
     Trial, RequestAccountNotification,
     RequestContactInfo,
     ProfilePicture,
-    Tag)
+    Tag, Education)
 from rest_framework import viewsets, permissions
 from rest_framework import serializers
 from main.serializers import(
@@ -19,6 +19,7 @@ from main.serializers import(
     ContactInfoSerializer,
     RequestContactInfoSerializer,
     TagSerializer,
+    EducationSerializer
 
 )
 from main import permissions as myPermissions
@@ -108,7 +109,7 @@ class TrialViewSet(viewsets.ViewSet):
             return Response(serializer.data)
 
 
-class ActorViewSet(viewsets.ReadOnlyModelViewSet):
+class ActorViewSet(viewsets.ModelViewSet):
     serializer_class = ActorSerializer
     permission_classes = (permissions.IsAuthenticated,)
 
@@ -150,6 +151,25 @@ class ExperienceViewSet(viewsets.ModelViewSet):
             return Experience.objects.all()
         elif self.request.user.is_authenticated():
             return Experience.objects.filter(
+                actor_id=Actor.objects.filter(
+                    user_id=self.request.user.id))
+        else:
+            return Experience.objects.none()
+
+
+class EducationViewSet(viewsets.ModelViewSet):
+    serializer_class = EducationSerializer
+    permission_classes = (
+        permissions.IsAuthenticated, myPermissions.IsOwnerOrReadOnly)
+
+    def perform_create(self, serializer):
+        serializer.save(actor=Actor.objects.get(id=self.request.user.id))
+
+    def get_queryset(self):
+        if self.request.user and self.request.user.is_staff:
+            return Education.objects.all()
+        elif self.request.user.is_authenticated():
+            return Education.objects.filter(
                 actor_id=Actor.objects.filter(
                     user_id=self.request.user.id))
         else:

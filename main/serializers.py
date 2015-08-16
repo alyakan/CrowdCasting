@@ -5,7 +5,8 @@ from main.models import (
     Trial, RequestAccountNotification,
     RequestContactInfo,
     ProfilePicture,
-    Tag)
+    Tag,
+    Education)
 
 from django.contrib.auth.models import User
 
@@ -41,10 +42,33 @@ class UserSerializer(serializers.ModelSerializer):
         user = super(UserSerializer, self).create(attrs)
         user.set_password(attrs['password'])
         user.save()
-        Actor.objects.create(
-            user_id=user.id,
-            name=user.first_name+" "+user.last_name)
+        # Actor.objects.create(
+        #     user_id=user.id,
+        #     name=user.first_name+" "+user.last_name)
         return user
+
+
+class TagSerializer(serializers.ModelSerializer):
+    """
+    Serializes the Tag model data
+    Author: Aly Yakan
+    """
+
+    class Meta:
+        model = Tag
+        fields = ['id', 'tag']
+
+
+class ExperienceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Experience
+        fields = ('id', 'experience',)
+
+
+class EducationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Education
+        fields = ('id', 'qualification',)
 
 
 class ActorSerializer(serializers.HyperlinkedModelSerializer):
@@ -53,22 +77,56 @@ class ActorSerializer(serializers.HyperlinkedModelSerializer):
     # profile_picture = serializers.HyperlinkedRelatedField(
     #     many=True, view_name='experience-detail', read_only=True)
 
-    experiences = serializers.HyperlinkedRelatedField(
-        many=True, view_name='experience-detail', read_only=True)
+    experiences = ExperienceSerializer(many=True)
+    tags = TagSerializer(many=True)
+    education = EducationSerializer(many=True)
     contactinfo = serializers.HyperlinkedRelatedField(
         many=True, view_name='contactinfo-detail', read_only=True)
 
     class Meta:
         model = Actor
-        fields = ('url', 'name', 'experiences', 'contactinfo')
+        fields = ('url', 'name', 'experiences', 'contactinfo', 'tags', 'education')
 
+    def create(self, validated_data):
+        experiences = validated_data.pop('experiences')
+        tags = validated_data.pop('tags')
+        education = validated_data.pop('education')
 
-class ExperienceSerializer(serializers.HyperlinkedModelSerializer):
-    actor = serializers.ReadOnlyField(source='actor.id')
+        actor = Actor.objects.create(
+            user=self.context['request'].user,
+            **validated_data)
+        for experience in experiences:
+            Experience.objects.create(actor=actor, **experience)
+        for tag in tags:
+            Tag.objects.create(actor=actor, **tag)
+        for edu in education:
+            Education.objects.create(actor=actor, **education)
+        return actor
 
-    class Meta:
-        model = Experience
-        fields = ('url', 'actor', 'experience')
+    def update(self, instance, validated_data):
+        instance.name = validated_data['name']
+        instance.save()
+
+        Experience.objects.filter(actor=instance).delete()
+        for item in validated_data['experiences']:
+            experience = Experience(
+                experience=item['experience'],
+                actor=instance)
+            experience.save()
+
+        Tag.objects.filter(actor=instance).delete()
+        for item in validated_data['tags']:
+            tag = Tag(tag=item['tag'], actor=instance)
+            tag.save()
+
+        Education.objects.filter(actor=instance).delete()
+        for item in validated_data['education']:
+            education = Education(
+                year=item['year'],
+                qualification=item['qualification'],
+                where=item['where'])
+            education.save()
+        return instance
 
 
 class ProfilePictureSerializer(serializers.HyperlinkedModelSerializer):

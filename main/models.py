@@ -65,6 +65,14 @@ class Tag(models.Model):
     Represents a single tag for an actor
     Author: Aly Yakan
     """
-    actor = models.ForeignKey(Actor)
+    actor = models.ForeignKey(Actor, related_name='tags')
 
     tag = models.CharField(max_length=128)
+
+
+class Education(models.Model):
+
+    actor = models.ForeignKey(Actor, related_name='education')
+    year = models.IntegerField()
+    qualification = models.CharField(max_length=128)
+    where = models.CharField(max_length=128)

@@ -2,7 +2,7 @@ from django.conf.urls import url, include
 from main.views import (
     ActorViewSet, ExperienceViewSet, ContactInfoViewSet,
     RequestContactInfoViewSet,
-    TagViewSet)
+    TagViewSet, EducationViewSet)
 from main import views
 from rest_framework.routers import DefaultRouter
 
@@ -10,7 +10,7 @@ from rest_framework.routers import DefaultRouter
 
 actor_list = ActorViewSet.as_view({
     'get': 'list',
-    'post': 'create'
+    'post': 'create',
 })
 
 actor_detail = ActorViewSet.as_view({
@@ -48,6 +48,13 @@ tag_detail = TagViewSet.as_view({
     'delete': 'destroy'
 })
 
+education_detail = EducationViewSet.as_view({
+    'get': 'retrieve',
+    'put': 'update',
+    'patch': 'partial_update',
+    'delete': 'destroy'
+})
+
 router = DefaultRouter()
 router.register(r'head_shots', views.HeadShotsViewSet)
 router.register(r'trial', views.TrialViewSet)
@@ -59,6 +66,8 @@ router.register(r'contactinfo', ContactInfoViewSet, base_name='contactinfo')
 router.register(r'request_contactinfo', RequestContactInfoViewSet)
 router.register(r'profile_pictures', views.ProfilePictureViewSet)
 router.register(r'tags', TagViewSet, base_name='tag')
+router.register(r'education', EducationViewSet, base_name='education')
+
 
 urlpatterns = [
     url(r'^', include(router.urls)),
