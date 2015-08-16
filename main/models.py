@@ -5,6 +5,7 @@ from django.core.validators import RegexValidator
 
 class Actor(models.Model):
     user = models.OneToOneField(User)
+    name = models.CharField(max_length=50)
 
 
 class HeadShots(models.Model):
