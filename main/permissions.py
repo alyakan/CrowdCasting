@@ -75,3 +75,14 @@ class IsPhotoUploaded(permissions.BasePermission):
         except:
             return False
 
+
+class UpdateOnly(permissions.BasePermission):
+
+    def has_permission(self, request, view):
+        if request.method in permissions.SAFE_METHODS:
+            return True
+        if request.method == 'POST':
+                actor = Actor.objects.filter(user=request.user).exists()
+                return not actor
+        else:
+            return True

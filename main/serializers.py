@@ -30,7 +30,7 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = (
-            'username', 'password', 'first_name', 'last_name', 'email',)
+            'username', 'first_name', 'last_name', 'email', 'password')
         # write_only_fields = ('password',)
         read_only_fields = (
             'is_staff', 'is_superuser', 'is_active', 'date_joined',)
@@ -81,8 +81,8 @@ class ActorSerializer(serializers.HyperlinkedModelSerializer):
     experiences = ExperienceSerializer(many=True)
     tags = TagSerializer(many=True)
     education = EducationSerializer(many=True)
-    contactinfo = serializers.HyperlinkedRelatedField(
-        many=True, view_name='contactinfo-detail', read_only=True)
+    # contactinfo = serializers.HyperlinkedRelatedField(
+    #     many=True, view_name='contactinfo-detail', read_only=True)
 
     class Meta:
         model = Actor
@@ -90,7 +90,7 @@ class ActorSerializer(serializers.HyperlinkedModelSerializer):
             'url', 'first_name', 'middle_name', 'last_name', 'date_of_birth',
             'gender', 'height', 'weight', 'hair_color', 'eye_color',
             'skin_color', 'about_me', 'full_body_shot', 'profile_picture',
-            'experiences', 'phone_number', 'education', 'tags', 'contactinfo',
+            'experiences', 'phone_number', 'education', 'tags',
         )
 
     def create(self, validated_data):
