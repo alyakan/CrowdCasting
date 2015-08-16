@@ -116,9 +116,12 @@ class ActorViewSet(viewsets.ReadOnlyModelViewSet):
         if self.request.user and self.request.user.is_staff:
             return Actor.objects.all()
         elif self.request.user.is_authenticated():
-            return Actor.objects.filter(
-                id=Actor.objects.get(
-                    user_id=self.request.user.id).id)
+            try:
+                return Actor.objects.filter(
+                    id=Actor.objects.get(
+                        user_id=self.request.user.id).id)
+            except:
+                return Actor.objects.none()
         else:
             return Actor.objects.none()
 
@@ -147,7 +150,7 @@ class ExperienceViewSet(viewsets.ModelViewSet):
             return Experience.objects.all()
         elif self.request.user.is_authenticated():
             return Experience.objects.filter(
-                actor_id=Actor.objects.get(
+                actor_id=Actor.objects.filter(
                     user_id=self.request.user.id))
         else:
             return Experience.objects.none()
