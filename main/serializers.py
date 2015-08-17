@@ -11,20 +11,6 @@ from main.models import (
 from django.contrib.auth.models import User
 
 
-class HeadShotsSerializer(serializers.HyperlinkedModelSerializer):
-
-    class Meta:
-        model = HeadShots
-        fields = ('image',)
-
-
-class TrialSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Trial
-        fields = ('name',)
-
-
 class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -139,35 +125,6 @@ class ActorSerializer(serializers.HyperlinkedModelSerializer):
                 where=item['where'])
             education.save()
         return instance
-
-
-class ProfilePictureSerializer(serializers.HyperlinkedModelSerializer):
-    actor = serializers.ReadOnlyField(source='actor.id')
-
-    class Meta:
-        model = ProfilePicture
-        fields = ('url', 'actor', 'profile_picture',)
-
-
-class RequestAccountNotificationSerializer(
-        serializers.HyperlinkedModelSerializer):
-
-    class Meta:
-        model = RequestAccountNotification
-        fields = ['name', 'phone_number']
-
-
-class ContactInfoSerializer(serializers.HyperlinkedModelSerializer):
-
-    """
-    serializes the contact info model data
-    author: Nourhan
-    """
-    actor = serializers.ReadOnlyField(source='actor.id')
-
-    class Meta:
-        model = ContactInfo
-        fields = ('url', 'actor', 'phone_number')
 
 
 class RequestContactInfoSerializer(
