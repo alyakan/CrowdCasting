@@ -1,8 +1,7 @@
 from django.conf.urls import url, include
 from main.views import (
-    ActorViewSet, ExperienceViewSet, ContactInfoViewSet,
-    RequestContactInfoViewSet,
-    TagViewSet, EducationViewSet)
+    ActorViewSet,
+    RequestContactInfoViewSet)
 from main import views
 from rest_framework.routers import DefaultRouter
 
@@ -20,40 +19,11 @@ actor_detail = ActorViewSet.as_view({
     'delete': 'destroy'
 })
 
-
-contactinfo_detail = ContactInfoViewSet.as_view({
-    'get': 'retrieve',
-    'put': 'update',
-    'patch': 'partial_update',
-    'delete': 'destroy'
-
-})
-
-experience_detail = ExperienceViewSet.as_view({
-    'get': 'retrieve',
-    'put': 'update',
-    'patch': 'partial_update',
-    'delete': 'destroy'
-})
-
 request_contactinfo = RequestContactInfoViewSet.as_view({
     'get': 'retrieve',
     'delete': 'destroy'
 })
 
-tag_detail = TagViewSet.as_view({
-    'get': 'retrieve',
-    'put': 'update',
-    'patch': 'partial_update',
-    'delete': 'destroy'
-})
-
-education_detail = EducationViewSet.as_view({
-    'get': 'retrieve',
-    'put': 'update',
-    'patch': 'partial_update',
-    'delete': 'destroy'
-})
 
 router = DefaultRouter()
 # router.register(r'head_shots', views.HeadShotsViewSet)

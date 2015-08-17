@@ -1,28 +1,11 @@
 from rest_framework import serializers
 from main.models import (
     Actor, Experience,
-    ContactInfo, HeadShots,
-    Trial, RequestAccountNotification,
     RequestContactInfo,
-    ProfilePicture,
     Tag,
     Education)
 
 from django.contrib.auth.models import User
-
-
-class HeadShotsSerializer(serializers.HyperlinkedModelSerializer):
-
-    class Meta:
-        model = HeadShots
-        fields = ('image',)
-
-
-class TrialSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Trial
-        fields = ('name',)
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -141,35 +124,6 @@ class ActorSerializer(serializers.HyperlinkedModelSerializer):
         return instance
 
 
-class ProfilePictureSerializer(serializers.HyperlinkedModelSerializer):
-    actor = serializers.ReadOnlyField(source='actor.id')
-
-    class Meta:
-        model = ProfilePicture
-        fields = ('url', 'actor', 'profile_picture',)
-
-
-class RequestAccountNotificationSerializer(
-        serializers.HyperlinkedModelSerializer):
-
-    class Meta:
-        model = RequestAccountNotification
-        fields = ['name', 'phone_number']
-
-
-class ContactInfoSerializer(serializers.HyperlinkedModelSerializer):
-
-    """
-    serializes the contact info model data
-    author: Nourhan
-    """
-    actor = serializers.ReadOnlyField(source='actor.id')
-
-    class Meta:
-        model = ContactInfo
-        fields = ('url', 'actor', 'phone_number')
-
-
 class RequestContactInfoSerializer(
         serializers.HyperlinkedModelSerializer):
 
@@ -177,8 +131,9 @@ class RequestContactInfoSerializer(
     serializes the request contact info model data
     author: Nourhan
     """
-    sender = serializers.ReadOnlyField(source='user.id')
+    director = serializers.ReadOnlyField(source='user.id')
+    actor = serializers.HyperlinkedIdentityField(view_name='actor-detail', source='actor_id')
 
     class Meta:
         model = RequestContactInfo
-        fields = ['url', 'sender', 'actor_username']
+        fields = ['url', 'actor', 'director', 'actor_id']

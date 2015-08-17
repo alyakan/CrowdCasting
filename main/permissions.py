@@ -1,5 +1,5 @@
 from rest_framework import permissions
-from main.models import Actor, ProfilePicture
+from main.models import Actor
 
 
 class IsStaffOrTargetUser(permissions.BasePermission):
