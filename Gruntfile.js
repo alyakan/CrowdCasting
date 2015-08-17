@@ -182,7 +182,7 @@ module.exports = function(grunt) {
         // Automatically inject Bower components into the app
         wiredep: {
             app: {
-                src: ['templates/main/index.html'],
+                src: ['templates/main/base.html'],
                 ignorePath: /\.\.\//
             },
             test: {
