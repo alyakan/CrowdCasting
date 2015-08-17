@@ -192,7 +192,7 @@ class RequestContactInfoViewSet(viewsets.ModelViewSet):
         permissions.IsAuthenticated, myPermissions.IsStaffOrTargetUser)
 
     def get_queryset(self):
-        if self.request.user and self.request.user.is_superuser:
+        if self.request.user and self.request.user.is_staff:
             return RequestContactInfo.objects.filter(sender=self.request.user)
         else:
             return
