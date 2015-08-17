@@ -61,7 +61,7 @@ router = DefaultRouter()
 router.register(r'user', views.UserViewSet)
 router.register(r'actor', views.ActorViewSet, base_name='actor')
 # router.register(r'experience', views.ExperienceViewSet, base_name='experience')
-router.register(r'request_account', views.RequestAccountViewSet)
+# router.register(r'request_account', views.RequestAccountViewSet)
 # router.register(r'contactinfo', ContactInfoViewSet, base_name='contactinfo')
 router.register(r'request_contactinfo', RequestContactInfoViewSet)
 # router.register(r'profile_pictures', views.ProfilePictureViewSet)
@@ -71,5 +71,6 @@ router.register(r'director', views.DirectorViewSet, base_name='director')
 
 
 urlpatterns = [
-    url(r'^', include(router.urls)),
+    url(r'^api/', include(router.urls)),
+    url(r'^', views.index.as_view()),
     ]
