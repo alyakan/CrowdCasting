@@ -1,10 +1,7 @@
 from rest_framework import serializers
 from main.models import (
     Actor, Experience,
-    ContactInfo, HeadShots,
-    Trial, RequestAccountNotification,
     RequestContactInfo,
-    ProfilePicture,
     Tag,
     Education)
 
@@ -134,8 +131,9 @@ class RequestContactInfoSerializer(
     serializes the request contact info model data
     author: Nourhan
     """
-    sender = serializers.ReadOnlyField(source='user.id')
+    director = serializers.ReadOnlyField(source='user.id')
+    actor = serializers.HyperlinkedIdentityField(view_name='actor-detail', source='actor_id')
 
     class Meta:
         model = RequestContactInfo
-        fields = ['url', 'sender', 'actor_username']
+        fields = ['url', 'actor', 'director', 'actor_id']

@@ -51,8 +51,9 @@ class Experience(models.Model):
 
 
 class RequestContactInfo(models.Model):
-    sender = models.ForeignKey(User, related_name='requestcontactinfo')
-    actor_username = models.CharField(max_length=100)
+    director = models.ForeignKey(User, related_name='requestcontactinfo')
+
+    actor_id = models.IntegerField()
 
 
 class Tag(models.Model):
