@@ -189,7 +189,8 @@ class RequestContactInfoViewSet(viewsets.ModelViewSet):
     queryset = RequestContactInfo.objects.all()
     serializer_class = RequestContactInfoSerializer
     permission_classes = (
-        permissions.IsAuthenticated, myPermissions.IsStaffOrTargetUser)
+        permissions.IsAuthenticated, myPermissions.IsStaffOrTargetUser,
+        myPermissions.PreventUpdate)
 
     def get_queryset(self):
         if self.request.user and self.request.user.is_staff:

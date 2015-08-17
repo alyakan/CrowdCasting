@@ -88,3 +88,17 @@ class UpdateOnly(permissions.BasePermission):
                 return not actor
         else:
             return True
+
+
+class PreventUpdate(permissions.BasePermission):
+    """
+    Permission that prevents update but allows delete
+    Author: Aly Yakan, Rana El-Garem
+    """
+
+    def has_object_permission(self, request, view, obj):
+        if request.method in permissions.SAFE_METHODS:
+            return True
+        elif request.method == 'DELETE':
+            return True
+        return False
