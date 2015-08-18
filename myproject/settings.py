@@ -85,6 +85,15 @@ DATABASES = {
     }
 }
 
+EMAIL_HOST = 'smtp.webfaction.com'
+EMAIL_HOST_USER = 'dreidev_info'
+EMAIL_HOST_PASSWORD = 'pass'
+DEFAULT_FROM_EMAIL = SERVER_EMAIL = 'info@dreidev.com'
+ADMIN_EMAIL = 'alexan.nader@gmail.com'
+COMPANY_EMAIL = 'alexan.nader@gmail.com'
+
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
