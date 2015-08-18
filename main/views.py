@@ -16,12 +16,9 @@ from main import permissions as myPermissions
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.views.generic import TemplateView
-<<<<<<< HEAD
 from rest_framework.decorators import detail_route, list_route
 from django.core.mail import EmailMultiAlternatives
-=======
 from django.http import JsonResponse
->>>>>>> b110d344bf5233274235347420541d9209765171
 
 
 class index(TemplateView):
@@ -138,7 +135,7 @@ class RequestContactInfoViewSet(viewsets.ModelViewSet):
                 serializer.save(director=self.request.user)
                 return
         raise serializers.ValidationError(
-                            'Invalid actor. Please try again.')
+            'Invalid actor. Please try again.')
 
     @list_route(methods=['get'])
     def confirm_all(self, request, pk=None):
@@ -172,6 +169,39 @@ class RequestContactInfoViewSet(viewsets.ModelViewSet):
                 </body>
                 </html>
                 """)
+            email = EmailMultiAlternatives(
+                subject, subject, to=['mostafa.93.mahmoud@gmail.com'])
+            email.attach_alternative(html_content, "text/html")
+            email.send()
+        else:
+            raise serializers.ValidationError(
+                'Invalid')
+        pass
+
+    @detail_route(methods=['get'])
+    def confirm_one(self, request, pk=None):
+        user = request.user
+        r = RequestContactInfo.objects.get(
+            director_id=user.id, status="pending checkout", actor_id=pk)
+        if r:
+            actor = Actor.objects.get(id=r.actor_id)
+            r.status = "pending admin approval"
+            r.save()
+            subject = "Contact info Request"
+            html_content = (
+                """
+                <html>
+                <body>
+                User Requesting: %s <br>
+                User's email: %s <br><br>
+                Requested actors contact info: <br><br>
+                &nbsp; &nbsp; &nbsp; - %s %s <br>
+                </body>
+                </html>
+                """
+                % (user.username, user.email,
+                    actor.first_name if actor.first_name else "",
+                   actor.last_name if actor.last_name else ""))
             email = EmailMultiAlternatives(
                 subject, subject, to=['mostafa.93.mahmoud@gmail.com'])
             email.attach_alternative(html_content, "text/html")
