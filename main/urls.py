@@ -42,5 +42,6 @@ router.register(r'director', views.DirectorViewSet, base_name='director')
 
 urlpatterns = [
     url(r'^api/', include(router.urls)),
-    url(r'^', views.index.as_view()),
+    url(r'^main/', views.index.as_view()),
+    url(r'^csrf/token/', views.get_token),
     ]

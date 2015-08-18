@@ -16,6 +16,7 @@ from main import permissions as myPermissions
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.views.generic import TemplateView
+from django.http import JsonResponse
 
 
 class index(TemplateView):
@@ -28,7 +29,7 @@ class UserViewSet(viewsets.ModelViewSet):
     permission_classes = (myPermissions.UserIsAuthenticated,)
 
     def get_queryset(self):
-        if self.request.user.is_superuser:
+        if self.request.user.is_staff:
             return User.objects.all()
         else:
             return User.objects.filter(id=self.request.user.id)
@@ -132,3 +133,18 @@ class RequestContactInfoViewSet(viewsets.ModelViewSet):
                 return
         raise serializers.ValidationError(
                             'Invalid actor. Please try again.')
+
+
+def get_token(request):
+    """
+    Returns the CSRF token required for a POST form. The token is an
+    alphanumeric value.
+
+    A side effect of calling this function is to make the csrf_protect
+    decorator and the CsrfViewMiddleware add a CSRF cookie and a 'Vary: Cookie'
+    header to the outgoing response.  For this reason, you may need to use this
+    function lazily, as is done by the csrf context processor.
+    """
+    request.META["CSRF_COOKIE_USED"] = True
+    csrf = request.META.get("CSRF_COOKIE", None)
+    return JsonResponse({'csrf': csrf})
