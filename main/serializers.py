@@ -132,8 +132,10 @@ class RequestContactInfoSerializer(
     author: Nourhan
     """
     director = serializers.ReadOnlyField(source='user.id')
-    actor = serializers.HyperlinkedIdentityField(view_name='actor-detail', source='actor_id')
+    actor = serializers.HyperlinkedIdentityField(
+        view_name='actor-detail', source='actor_id')
+    status = serializers.ReadOnlyField()
 
     class Meta:
         model = RequestContactInfo
-        fields = ['url', 'actor', 'director', 'actor_id']
+        fields = ['url', 'actor', 'director', 'actor_id', 'status']
