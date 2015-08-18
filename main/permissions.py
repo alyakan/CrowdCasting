@@ -1,5 +1,5 @@
 from rest_framework import permissions
-from main.models import Actor, ProfilePicture
+from main.models import Actor
 
 
 class IsStaffOrTargetUser(permissions.BasePermission):
@@ -75,3 +75,30 @@ class IsPhotoUploaded(permissions.BasePermission):
         except:
             return False
 
+
+class UpdateOnly(permissions.BasePermission):
+
+    def has_permission(self, request, view):
+        if request.method in permissions.SAFE_METHODS:
+            return True
+        if request.user.is_staff:
+            return False
+        if request.method == 'POST':
+                actor = Actor.objects.filter(user=request.user).exists()
+                return not actor
+        else:
+            return True
+
+
+class PreventUpdate(permissions.BasePermission):
+    """
+    Permission that prevents update but allows delete
+    Author: Aly Yakan, Rana El-Garem
+    """
+
+    def has_object_permission(self, request, view, obj):
+        if request.method in permissions.SAFE_METHODS:
+            return True
+        elif request.method == 'DELETE':
+            return True
+        return False
