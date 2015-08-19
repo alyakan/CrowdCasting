@@ -40,7 +40,7 @@
 
             <ul class="nav navbar-nav">
               <li class="active"><a href="#/">Home</a></li>
-              <li><a ng-href="#/">About</a></li>
+              <li><a ui-sref="actors">Actors</a></li>
               <li><a ng-href="#/">Contact</a></li>
             </ul>
           </div>
@@ -48,7 +48,7 @@
       </div>
     </div>
 
-    <div class="container" ui-view>
+    <div class="container" ui-view ng-cloak>
     </div>
 
     <div class="footer">
@@ -88,6 +88,7 @@
         <script src="scripts/app.js"></script>
         <script src="scripts/controllers/main.js"></script>
         <script src="scripts/controllers/allActors.js"></script>
+        <script src="scripts/controllers/actor.js"></script>
         <!-- endbuild -->
 </body>
 </html>

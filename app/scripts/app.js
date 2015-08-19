@@ -35,7 +35,7 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
     // ROUTES
     $urlRouterProvider.otherwise("/");
     $stateProvider
-        .state('actor', {
+        .state('actors', {
             url: "/actor",
             templateUrl: "views/all_actors.html",
             controller: "allActorsCtrl"
