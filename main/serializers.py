@@ -13,7 +13,7 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = (
-            'username', 'first_name', 'last_name', 'email', 'password')
+            'username', 'first_name', 'last_name', 'email', 'password', 'id',)
         # write_only_fields = ('password',)
         read_only_fields = (
             'is_staff', 'is_superuser', 'is_active', 'date_joined',)
@@ -68,7 +68,7 @@ class ActorSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Actor
         fields = (
-            'url', 'first_name', 'middle_name', 'last_name', 'date_of_birth',
+            'id', 'url', 'first_name', 'middle_name', 'last_name', 'date_of_birth',
             'gender', 'height', 'weight', 'hair_color', 'eye_color',
             'skin_color', 'about_me', 'full_body_shot', 'profile_picture',
             'experiences', 'phone_number', 'education', 'tags',
