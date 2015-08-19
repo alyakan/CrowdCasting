@@ -37,8 +37,8 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
     // ROUTES
     $urlRouterProvider.otherwise("/");
     $stateProvider
-        .state('allActors', {
-            url: "/allActors",
+        .state('actors', {
+            url: "/actor",
             templateUrl: "views/all_actors.html",
             controller: "allActorsCtrl"
         })
@@ -46,6 +46,16 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
             url: "/profile",
             templateUrl: "views/profile.html",
             controller:"profileCtrl"
+        })
+        .state('actor-detail', {
+            url: "/actor/:id",
+            templateUrl: "views/detail_actors.html",
+            controller: "actorCtrl"        	
+        })
+        .state('index', {
+            url: "/",
+            templateUrl: "views/main.html",
+            controller: "MainCtrl"
         })
 
 
@@ -55,13 +65,29 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
     $http.get(HOSTED_URL + '/csrf/token/').then(function(response) {
         $cookies.put('csrftoken', response.data.csrf);
         console.log('CSRF Success', response.data.csrf);
-        console.log('CSRF COOKIE: ', $cookies.get('csrftoken'));
 
         // CSRF TOKEN
         $http.defaults.headers.post['X-CSRFToken'] = $cookies.get('csrftoken');
         // $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
 
+
+        // $http.defaults.headers.post['csrf'] = $cookies.get('csrftoken');
+
+
+
+        // TO BE REMOVED WHEN SIGIN IS DONE
+        $http.post(HOSTED_URL + '/api-auth/login/', {
+            username: 'director',
+            password: 'test',
+            next: 'api/user/'
+        }).then(function(response) {}, function(response) {})
+
+
+    }, function(response) {
+        console.log('CSRF FAILED: ', response);
+    })
+})
 
         // $http.defaults.headers.post['csrf'] = $cookies.get('csrftoken');
 
