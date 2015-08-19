@@ -1,11 +1,21 @@
-<ul>
-	<li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero accusamus ad recusandae consectetur rerum eos nam sed, corporis accusantium! Fugit accusantium provident quia molestias. Esse quisquam suscipit fugit excepturi sapiente.</li>
-	<li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero accusamus ad recusandae consectetur rerum eos nam sed, corporis accusantium! Fugit accusantium provident quia molestias. Esse quisquam suscipit fugit excepturi sapiente.</li>
-	<li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero accusamus ad recusandae consectetur rerum eos nam sed, corporis accusantium! Fugit accusantium provident quia molestias. Esse quisquam suscipit fugit excepturi sapiente.</li>
-	<li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero accusamus ad recusandae consectetur rerum eos nam sed, corporis accusantium! Fugit accusantium provident quia molestias. Esse quisquam suscipit fugit excepturi sapiente.</li>
-	<li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero accusamus ad recusandae consectetur rerum eos nam sed, corporis accusantium! Fugit accusantium provident quia molestias. Esse quisquam suscipit fugit excepturi sapiente.</li>
-	<li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero accusamus ad recusandae consectetur rerum eos nam sed, corporis accusantium! Fugit accusantium provident quia molestias. Esse quisquam suscipit fugit excepturi sapiente.</li>
-	<li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero accusamus ad recusandae consectetur rerum eos nam sed, corporis accusantium! Fugit accusantium provident quia molestias. Esse quisquam suscipit fugit excepturi sapiente.</li>
-	<li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero accusamus ad recusandae consectetur rerum eos nam sed, corporis accusantium! Fugit accusantium provident quia molestias. Esse quisquam suscipit fugit excepturi sapiente.</li>
-	<li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero accusamus ad recusandae consectetur rerum eos nam sed, corporis accusantium! Fugit accusantium provident quia molestias. Esse quisquam suscipit fugit excepturi sapiente.</li>
-</ul>
+<div class="col-lg-12 col-md-12 col sm-12">
+	<input type="text" ng-model="filterQuery">
+</div>
+
+<div class="col-lg-4 col-md-4 col sm-4" ng-repeat="actor in actors | filter:filterQuery">
+    <figure>
+        <img ng-src="{{actor.profile_picture}}" alt="" height="100%" width="100%">
+    </figure>
+    <figcaption>
+        <ul>
+            <h1>	
+	        	<a ui-sref="actor-detail({ id: {{actor.id}} })">
+				{{actor.first_name}}
+	        	</a>
+			</h1>
+            <li ng-repeat="(key,value) in actor">
+                {{key}}: {{value}}
+            </li>
+        </ul>
+    </figcaption>
+</div>
