@@ -52,7 +52,7 @@ class Experience(models.Model):
 
 class RequestContactInfo(models.Model):
     director = models.ForeignKey(User, related_name='requestcontactinfo')
-
+    status = models.CharField(max_length=16, default='pending checkout')
     actor_id = models.IntegerField()
 
 
