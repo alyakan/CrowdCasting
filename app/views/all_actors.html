@@ -4,7 +4,7 @@
 
 <div class="col-lg-4 col-md-4 col sm-4" ng-repeat="actor in actors | filter:filterQuery">
     <figure>
-        <img ng-show="{{actor.profile_picture}}" src="{{actor.profile_picture}}" alt="" height="100%" width="100%">
+        <img ng-src="{{actor.profile_picture}}" alt="" height="100%" width="100%">
     </figure>
     <figcaption>
         <ul>
