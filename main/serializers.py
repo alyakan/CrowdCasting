@@ -58,6 +58,7 @@ class ActorSerializer(serializers.HyperlinkedModelSerializer):
     # experiences = serializers.StringRelatedField(many=True)
     # profile_picture = serializers.HyperlinkedRelatedField(
     #     many=True, view_name='experience-detail', read_only=True)
+    phone_number = serializers.SerializerMethodField()
 
     experiences = ExperienceSerializer(many=True)
     tags = TagSerializer(many=True)
@@ -125,6 +126,13 @@ class ActorSerializer(serializers.HyperlinkedModelSerializer):
                 where=item['where'])
             education.save()
         return actor
+
+    def get_phone_number(self, obj):
+        # obj.created_by is the foreign key to the user model
+        if self.context['request'].user.is_staff:
+            return ""
+        else:
+            return obj.phone_number
 
 
 class RequestContactInfoSerializer(
