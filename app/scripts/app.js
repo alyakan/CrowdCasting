@@ -43,7 +43,7 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
             controller: "allActorsCtrl"
         })
         .state('profile', {
-            url: "/profile",
+            url: "/profile/:id",
             templateUrl: "views/profile.html",
             controller: "profileCtrl"
         })

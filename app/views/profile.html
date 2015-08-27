@@ -1,15 +1,68 @@
 <div class="row">
-    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
-        <img id="img" src="{{img}}" width="200px" height="300px">
-        <button popover-template="dynamicPopover.templateUrl" popover-title="{{dynamicPopover.title}}" type="button" class="btn btn-default">button</button>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
+        <h1 class="gold">{{actor.first_name}} {{actor.last_name}}</h1>
     </div>
-    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 col-lg-offset-1 col-md-offset-1 ">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-repeat="detail in details">
-            <h2 ng-hide="editing" ng-click="editing = true">{{detail}}</h2>
-            <form ng-show="editing" ng-submit="editing = false">
-                <input type="text" ng-model="detail" />
-                <button class="btn" type="submit"> save </button>
-            </form>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        
+        <form ng-submit="submitInfo(actor)" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 col-lg-offset-3 col-md-offset-3 col-sm-offset-3 col-xs-offset-3 charactristics animation" ng-show="charactristics" ng-hide=" tags || experiences">
+            <h2><u class="gold">Charactristics</u><img ng-click="editing = true" class="edit" src="images/edit-09.svg"></h2>
+            <input type="text" hidden name="csrftoken" value={{csrftoken}}>
+            <h2 ng-hide="editing" class="text-capitalize gold">{{actor.gender}}</h2>
+            <input ng-show="editing" type="text" ng-model="actor.gender" ng-style="$scope.style" />
+            <h2 ng-hide="editing" class="text-capitalize gold"> Height : {{actor.height}}</h2>
+            <input ng-show="editing" type="text" ng-model="actor.height" />
+            <h2 ng-hide="editing" class="text-capitalize gold">Weight : {{actor.weight}}</h2>
+            <input ng-show="editing" type="text" ng-model="actor.weight" />
+            <h2 ng-hide="editing" class="text-capitalize gold">Hair color : {{actor.hair_color}}</h2>
+            <input ng-show="editing" type="text" ng-model="actor.hair_color" />
+            <h2 ng-hide="editing" class="text-capitalize gold">Skin color : {{actor.skin_color}}</h2>
+            <input ng-show="editing" type="text" ng-model="actor.skin_color" />
+            <h2 ng-hide="editing" class="text-capitalize gold">Eye color : {{actor.eye_color}}</h2>
+            <input ng-show="editing" type="text" ng-model="actor.eye_color" />
+            <button ng-show="editing" class="btn" type="submit"> save </button>
+        </form>
+        <form ng-submit="submitInfo(actor)" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 col-lg-offset-3 col-md-offset-3 col-sm-offset-3 col-xs-offset-3 tags animation" ng-show="tags" ng-hide="charactristics || experiences">
+            <h2><u class="gold">Tags</u><img ng-click="editing = true" class="edit" src="images/edit-09.svg"></h2>
+            <input type="text" hidden name="csrftoken" value={{csrftoken}}>
+            <div ng-repeat="tag in actor.tags">
+                <h2 ng-hide="editing" class="text-capitalize gold">{{tag}}</h2>
+                <input ng-show="editing" type="text" ng-model="tag"/>
+            </div>
+            <button ng-show="editing" class="btn" type="submit"> save </button>
+        </form>
+        <form ng-submit="submitInfo(actor)" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 col-lg-offset-3 col-md-offset-3 col-sm-offset-3 col-xs-offset-3 experiences animation" ng-show ="experiences" ng-hide=" charactristics || tags">
+            <h2><u class="gold">Experiences</u><img ng-click="editing = true" class="edit" src="images/edit-09.svg"></h2>
+            <input type="text" hidden name="csrftoken" value={{csrftoken}}>
+            <div ng-repeat="experience in actor.experience">
+                <h2 ng-hide="editing" class="text-capitalize gold">{{experience}}</h2>
+                <input ng-show="editing" type="text" ng-model="experience"/>
+            </div>
+            <button ng-show="editing" class="btn" type="submit"> save </button>
+        </form>
+
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 col-lg-offset-2 col-md-offset-2 col-sm-offset-2 col-xs-offset-2 profile-picture-div" dir="rtl">
+            <div class="row pic-edit">
+                <img src="images/edit-09.svg" popover-placement="left" popover-template="dynamicPopover.templateUrl" popover-title="{{dynamicPopover.title}}" style="padding-bottom:1em;">
+            </div>
+            <div class="row picture-row">
+                <img id="img" src="{{actor.profile_picture}}" width="200px" height="300px" class="picture">
+            </div>
         </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 crew">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 blue">
+            <label>ADD TO YOUR</label>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 blue text-center crew-padding">
+            <label> CREW</label>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <img src="images/addtocrew-08.svg">
+        </div>
+    </div>
+    <div class="circle col-lg-2 col-md-2 col-sm-2 col-xs-2  col-lg-offset-2 col-md-offset-2 col-sm-offset-2 col-xs-offset-2 text-center" ng-click="animate()">
+        <span class="glyphicon glyphicon-triangle-bottom gold"></span>
     </div>
 </div>
