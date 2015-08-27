@@ -100,8 +100,11 @@ class ActorSerializer(serializers.HyperlinkedModelSerializer):
             id=instance.id,
             user=self.context['request'].user,
             **validated_data)
+        if not validated_data['profile_picture']:
+            actor.profile_picture = instance.profile_picture
+        if not validated_data['full_body_shot']:
+            actor.full_body_shot = instance.full_body_shot
         actor.save()
-
         Experience.objects.filter(actor=instance).delete()
         for item in experiences:
             experience = Experience(
@@ -121,7 +124,7 @@ class ActorSerializer(serializers.HyperlinkedModelSerializer):
                 qualification=item['qualification'],
                 where=item['where'])
             education.save()
-        return instance
+        return actor
 
 
 class RequestContactInfoSerializer(

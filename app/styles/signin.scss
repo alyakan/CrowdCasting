@@ -1,0 +1,25 @@
+.sign-in {
+    padding: 0;
+    label {
+        padding: 0;
+        &:hover {
+            color: #0c1428;
+        }
+    }
+    .signup {
+        padding-left: 1em;
+    }
+}
+.nohover{
+	&:hover{
+		color:#c1ad56;
+	}
+}
+.spacing {
+    padding-bottom: 1em;
+}
+
+.line {
+	position: relative;
+	left: -100px;
+}

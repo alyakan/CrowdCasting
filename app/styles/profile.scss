@@ -1,0 +1,97 @@
+$gold: #c1ad56;
+$blue: #0c1428;
+body {
+    font-family: 'Abel', sans-serif;
+}
+
+.gold {
+    color: #c1ad56;
+}
+
+.blue {
+    color: #0c1428;
+}
+
+.edit {
+    padding-left: 1em;
+}
+
+.profile-picture-div {
+    padding-right: 3em;
+}
+
+.circle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    background-color: rgba(188, 187, 187, 0.5);
+    padding: 0.6em;
+    span {
+        font-size: 2.5em;
+        &:focus {
+            outline-width: 0px;
+        }
+    }
+    &:focus {
+        outline-width: 0px;
+    }
+}
+
+.picture-row {
+    display: inline-block;
+    overflow: hidden;
+}
+
+.picture-exp {
+    transform: scale(1.5);
+    -ms-transform: scale(1.5);
+    /* IE 9 */
+    -moz-transform: scale(1.5);
+    /* Firefox */
+    -webkit-transform: scale(1.5);
+    /* Safari and Chrome */
+    -o-transform: scale(1.5);
+    /* Opera */
+}
+
+.picture-tag {
+    transform: scale(2);
+    -ms-transform: scale(2);
+    /* IE 9 */
+    -moz-transform: scale(2);
+    /* Firefox */
+    -webkit-transform: scale(2);
+    /* Safari and Chrome */
+    -o-transform: scale(2);
+    /* Opera */
+}
+
+.animation {
+    -webkit-transition: all linear 0.0001s;
+    transition: all linear 0.0001s;
+}
+
+.animation.ng-hide {
+    opacity: 0;
+}
+
+.crew {
+    label {
+        font-weight: normal;
+        font-size: 2em;
+    }
+    .crew-padding {
+        padding-left: 3.4em;
+    }
+    img {
+        width: 5em;
+        margin-left: 2.2em;
+    }
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"]{
+    border:0;
+    border-bottom: 1px solid #c1ad56;
+}

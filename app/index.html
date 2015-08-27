@@ -22,7 +22,7 @@
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
     <!-- Add your site or application content here -->
-    <div class="header">
+    <!-- <div class="header">
       <div class="navbar navbar-default" role="navigation">
         <div class="container">
           <div class="navbar-header">
@@ -46,14 +46,16 @@
             </ul>
           </div>
         </div>
-    </div>
+      </div>
+    </div> -->
+    <a ui-sref="index" class="logo-img-link">
+        <img class="full-size-img" src="images/logo-blue.svg" alt="">
+    </a>
+    <div class="blue-background">
+        <div class="white-cut"></div>
 
-    <div class="container" ui-view ng-cloak>
     </div>
-    <div class="footer">
-        <div class="container">
-            <p><span class="glyphicon glyphicon-heart"></span> from the Yeoman team</p>
-        </div>
+    <div class="main-content" ui-view ng-cloak>
     </div>
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
     <script>
@@ -88,8 +90,13 @@
     <script src="scripts/app.js"></script>
     <script src="scripts/controllers/main.js"></script>
     <script src="scripts/controllers/allActors.js"></script>
+<<<<<<< HEAD
     <script src="scripts/controllers/profile.js"></script>
         <script src="scripts/controllers/actor.js"></script>
+=======
+    <script src="scripts/controllers/actor.js"></script>
+    <!-- endbuild -->
+>>>>>>> cde126b69be00c9d404050ba6c5a9d0f2c694c39
 </body>
 
 </html>
