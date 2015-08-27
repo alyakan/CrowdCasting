@@ -45,17 +45,27 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
         .state('profile', {
             url: "/profile",
             templateUrl: "views/profile.html",
-            controller:"profileCtrl"
+            controller: "profileCtrl"
         })
         .state('actor-detail', {
             url: "/actor/:id",
             templateUrl: "views/detail_actors.html",
-            controller: "actorCtrl"        	
+            controller: "actorCtrl"
         })
         .state('index', {
             url: "/",
             templateUrl: "views/main.html",
             controller: "MainCtrl"
+        })
+        .state('signin', {
+            url: "/signin",
+            templateUrl: "views/signin.html",
+            controller: "SigninCtrl"
+        })
+        .state('signup', {
+            url: "/signup",
+            templateUrl: "views/signup.html",
+            controller: "SignupCtrl"
         })
 
 
@@ -89,26 +99,20 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
     })
 })
 
-        // $http.defaults.headers.post['csrf'] = $cookies.get('csrftoken');
+// $http.defaults.headers.post['csrf'] = $cookies.get('csrftoken');
 
 
 
-        // TO BE REMOVED WHEN SIGIN IS DONE
-        $http.post(HOSTED_URL + '/api-auth/login/', {
-            username: 'test',
-            password: 'test',
-            next: 'api/user/'
-        }).then(function(response) {
-            console.log('Signin Success: ', response);
-        }, function(response) {
-            console.log('Signin Error: ', response);
-        });
-
-
-    }, function(response) {
-        console.log('CSRF FAILED: ', response);
-    });
-});
+// // TO BE REMOVED WHEN SIGIN IS DONE
+// $http.post(HOSTED_URL + '/api-auth/login/', {
+//     username: 'test',
+//     password: 'test',
+//     next: 'api/user/'
+// }).then(function(response) {
+//     console.log('Signin Success: ', response);
+// }, function(response) {
+//     console.log('Signin Error: ', response);
+// });
 
 
 

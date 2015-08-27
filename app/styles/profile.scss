@@ -91,7 +91,13 @@ body {
 
 input[type="text"],
 input[type="email"],
-input[type="password"]{
-    border:0;
+input[type="password"] {
+    border: 0;
     border-bottom: 1px solid #c1ad56;
+    background-color: transparent;
+    color:#c1ad56;
+    &:focus {
+        outline-width: 0px;
+    }
 }
+

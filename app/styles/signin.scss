@@ -1,25 +1,65 @@
 .sign-in {
     padding: 0;
-    label {
+    .signin,
+    .signup {
         padding: 0;
+        font-size: 34px;
         &:hover {
-            color: #0c1428;
+            color: #c1ad56;
+            text-decoration: underline;
         }
     }
     .signup {
         padding-left: 1em;
     }
 }
-.nohover{
-	&:hover{
-		color:#c1ad56;
-	}
+
+.wrap {
+    word-wrap: break-word;
 }
+
+label {
+    &:hover {
+        color: #c1ad56;
+    }
+    &:focus {
+        outline-width: 0px;
+    }
+}
+
 .spacing {
     padding-bottom: 1em;
 }
 
 .line {
+    position: relative;
+    left: -40px;
+}
+.width-limit {
+	width:25em;
+}
+.position{
 	position: relative;
-	left: -100px;
+	top:5em;
+	left:-2em;
+	font-size: 30px;
+	overflow-x:hidden;
+}
+
+.text-signin {
+	width:14em;
+}
+
+.sign-up{
+	width:6em;
+}
+.padding-left-form {
+	padding-left: 0.5em;
+}
+.form-control,
+select{
+	background-color: #0c1428;
+	color:#c1ad56;
+	border:1px solid #c1ad56;
+	border-radius:0;
 }
