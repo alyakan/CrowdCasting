@@ -1,23 +1,7 @@
-<div class="full-page">
-
-    
+<div class="full-page-content top-actors-center">
+    <div class="col-lg-3 col-md-3 col-sm-3" ng-repeat="actor in actors | filter:filterQuery | limitTo: 4">
+        <figure>
+            <img class="actor-img" ng-src="{{actor.profile_picture}}" alt="{{actor.first_name}} {{actor.last_name}}" height="100%" width="100%">
+        </figure>
+    </div>
 </div>
-
-<!-- <div class="col-lg-4 col-md-4 col sm-4" ng-repeat="actor in actors | filter:filterQuery">
-    <figure>
-        <img ng-src="{{actor.profile_picture}}" alt="" height="100%" width="100%">
-    </figure>
-    <figcaption>
-        <ul>
-            <h1>	
-	        	<a ui-sref="actor-detail({ id: {{actor.id}} })">
-				{{actor.first_name}}
-	        	</a>
-			</h1>
-            <li ng-repeat="(key,value) in actor">
-                {{key}}: {{value}}
-            </li>
-        </ul>
-    </figcaption>
-</div>
- -->
