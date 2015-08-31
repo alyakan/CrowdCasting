@@ -3,8 +3,8 @@
     <img src="images/sign-in-04.svg" width="400px">
     </div>
     <form class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 gold sign-in width-limit">
-            <p class="wrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis alias et rem quae distinctio eius debitis</p>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 gold sign-in">
+            <p class="wrap width-limit">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis alias et rem quae distinctio eius debitis</p>
         </div>
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 line">
             <img src="images/line-03.svg">
@@ -14,7 +14,7 @@
                 <label class="gold nohover">E-Mail</label>
             </div>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 sign-in spacing">
-                <input type="email" class="text-signin">
+                <input type="email" class="text-signin" ng-model="email">
             </div>
         </div>
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 sign-in">
@@ -22,11 +22,11 @@
                 <label class="gold nohover">Password</label>
             </div>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 sign-in spacing">
-                <input type="password" class="text-signin">
+                <input type="password" class="text-signin" ng-model="password">
             </div>
         </div>
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 sign-in">
-            <label class="gold btn signin" role="submit">Login</label>
+            <label class="gold btn signin" ng-click="login()">Login</label>
             <label class="gold btn signup" ui-sref="signup">SignUp</label>
         </div>
     </form>

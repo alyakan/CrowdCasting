@@ -36,12 +36,13 @@ label {
     left: -40px;
 }
 .width-limit {
-	width:25em;
+	width:23em;
 }
 .position{
 	position: relative;
-	top:5em;
+	top:4em;
 	left:-2em;
+    width: 100%;
 	font-size: 30px;
 	overflow-x:hidden;
 }
@@ -62,4 +63,7 @@ select{
 	color:#c1ad56;
 	border:1px solid #c1ad56;
 	border-radius:0;
+    &:focus{
+        outline-width: 0px;
+    }
 }

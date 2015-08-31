@@ -15,12 +15,12 @@
                     <label class="gold nohover">E-Mail</label>
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 sign-in spacing">
-                    <input type="email" class="sign-up">
+                    <input type="email" class="sign-up" ng-model="email">
                 </div>
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 sign-in">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 sign-in spacing">
-                    <select name="role" id="input" class="form-control" required="required">
+                    <select name="role" id="input" class="form-control" required="required" ng-model="role">
                         <option value="Director">Director</option>
                         <option value="Actor">Actor</option>
                     </select>
@@ -33,7 +33,7 @@
                     <label class="gold nohover">Password</label>
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 sign-in spacing">
-                    <input type="password" class="sign-up">
+                    <input type="password" class="sign-up" ng-model="password">
                 </div>
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 sign-in">
@@ -41,7 +41,7 @@
                     <label class="gold nohover">Confirm Password</label>
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 sign-in spacing">
-                    <input type="password" class="sign-up">
+                    <input type="password" class="sign-up" ng-model="passwordconfirm">
                 </div>
             </div>
         </div>

@@ -16,6 +16,11 @@ body {
     padding-left: 1em;
 }
 
+.name {
+    position: relative;
+    left: -15%;
+}
+
 .profile-picture-div {
     padding-right: 3em;
 }
@@ -26,6 +31,9 @@ body {
     border-radius: 50px;
     background-color: rgba(188, 187, 187, 0.5);
     padding: 0.6em;
+    position: relative;
+    top: 65pt;
+    left: 70%;
     span {
         font-size: 2.5em;
         &:focus {
@@ -67,6 +75,8 @@ body {
 }
 
 .animation {
+    position: relative;
+    top: 3em;
     -webkit-transition: all linear 0.0001s;
     transition: all linear 0.0001s;
 }
@@ -76,17 +86,57 @@ body {
 }
 
 .crew {
+    position: relative;
+    top: -47pt;
+    left: 30pt;
     label {
         font-weight: normal;
         font-size: 2em;
-    }
-    .crew-padding {
-        padding-left: 3.4em;
+        position: relative;
+        left:-10%;
     }
     img {
         width: 5em;
         margin-left: 2.2em;
     }
+}
+
+.title {
+    position: relative;
+    left: -84%;
+}
+
+.line-1 {
+    position: relative;
+    left: -70%;
+}
+
+.line-2 {
+    position: relative;
+    left: -55%;
+}
+
+.line-3 {
+    position: relative;
+    left: -40%;
+}
+
+.line-4 {
+    position: relative;
+    left: -25%;
+}
+
+.line-5 {
+    position: relative;
+    left: -10%;
+}
+
+.line-6 {
+    position: relative;
+    left: 6%;
+}
+.profile-input{
+    font-size: 24pt;
 }
 
 input[type="text"],
@@ -95,9 +145,27 @@ input[type="password"] {
     border: 0;
     border-bottom: 1px solid #c1ad56;
     background-color: transparent;
-    color:#c1ad56;
+    color: #c1ad56;
     &:focus {
         outline-width: 0px;
     }
 }
 
+.row-fixed{
+position: absolute;
+top:75%;
+height: 73pt;
+}
+
+.btn-profile{
+    color: #0c1428;
+    background-color: #c1ad56;
+    position: relative;
+    top:30pt;
+    left:40%;
+    z-index: 100;
+}
+
+.clickable {
+    cursor: pointer;
+}
