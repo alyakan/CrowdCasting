@@ -35,35 +35,47 @@ label {
     position: relative;
     left: -40px;
 }
+
 .width-limit {
-	width:23em;
+    width: 23em;
 }
-.position{
-	position: relative;
-	top:4em;
-	left:-2em;
+
+.position {
+    position: relative;
+    top: 4em;
+    left: -2em;
     width: 100%;
-	font-size: 30px;
-	overflow-x:hidden;
+    font-size: 30px;
+    overflow-x: hidden;
+}
+
+.signup-position {
+    position: relative;
+    top: 4em;
+    left: -2em;
+    font-size:20px;
+    overflow-x: hidden;
 }
 
 .text-signin {
-	width:14em;
+    width: 14em;
 }
 
-.sign-up{
-	width:6em;
+.sign-up {
+    width: 6em;
 }
+
 .padding-left-form {
-	padding-left: 0.5em;
+    padding-left: 0.5em;
 }
+
 .form-control,
-select{
-	background-color: #0c1428;
-	color:#c1ad56;
-	border:1px solid #c1ad56;
-	border-radius:0;
-    &:focus{
+select {
+    background-color: #0c1428;
+    color: #c1ad56;
+    border: 1px solid #c1ad56;
+    border-radius: 0;
+    &:focus {
         outline-width: 0px;
     }
 }

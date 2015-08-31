@@ -1,4 +1,4 @@
-<div class="row position">
+<div class="row signup-position">
     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 col-lg-offset-2 col-md-offset-2 col-sm-offset-2 col-xs-offset-2 width">
         <img src="images/sign-in-04.svg" width="400px">
     </div>
@@ -12,10 +12,28 @@
         <div class="row padding-left-form">
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 sign-in">
                 <div class="rcol-lg-12 col-md-12 col-sm-12 col-xs-12 sign-in">
-                    <label class="gold nohover">E-Mail</label>
+                    <label class="gold nohover">First Name</label>
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 sign-in spacing">
-                    <input type="email" class="sign-up" ng-model="email">
+                    <input type="text" class="sign-up" ng-model="first_name">
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 sign-in">
+                <div class="rcol-lg-12 col-md-12 col-sm-12 col-xs-12 sign-in">
+                    <label class="gold nohover">Last Name</label>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 sign-in spacing">
+                    <input type="text" class="sign-up" ng-model="last_name">
+                </div>
+            </div>
+        </div>
+        <div class="row padding-left-form">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 sign-in">
+                <div class="rcol-lg-12 col-md-12 col-sm-12 col-xs-12 sign-in">
+                    <label class="gold nohover">Username</label>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 sign-in spacing">
+                    <input type="text" class="sign-up" ng-model="username">
                 </div>
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 sign-in">
@@ -24,6 +42,16 @@
                         <option value="Director">Director</option>
                         <option value="Actor">Actor</option>
                     </select>
+                </div>
+            </div>
+        </div>
+        <div class="row padding-left-form">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 sign-in">
+                <div class="rcol-lg-12 col-md-12 col-sm-12 col-xs-12 sign-in">
+                    <label class="gold nohover">E-Mail</label>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 sign-in spacing">
+                    <input type="email" class="sign-up" ng-model="email">
                 </div>
             </div>
         </div>
@@ -46,7 +74,7 @@
             </div>
         </div>
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 sign-in">
-            <label class="gold btn signin" role="submit">SignUp</label>
+            <label class="gold btn signin" role="submit" ng-click="signup()">SignUp</label>
             <label class="gold btn signup" ui-sref="signin">Login</label>
         </div>
     </form>

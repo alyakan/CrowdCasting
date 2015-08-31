@@ -1,61 +1,60 @@
-
-    <div class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center text-capitalize name">
-            <h1 class="gold">{{actor.first_name}} {{actor.last_name}}</h1>
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center text-capitalize name">
+        <h1 class="gold">{{actor.first_name}} {{actor.last_name}}</h1>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <form ng-submit="submitInfo(actor)" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 col-lg-offset-3 col-md-offset-3 col-sm-offset-3 col-xs-offset-3 charactristics animation" ng-show="charactristics" ng-hide=" tags || experiences">
+            <h2><u class="gold title">Charactristics</u><img ng-click="editing = true" class="edit title" src="images/edit-09.svg"></h2>
+            <h2 ng-hide="editing" class="text-capitalize gold line-1">{{actor.gender}}</h2>
+            <input ng-show="editing" type="text" ng-model="actor.gender" class="line-1 profile-input" />
+            <h2 ng-hide="editing" class="text-capitalize gold line-2"> Height : {{actor.height}}</h2>
+            <input ng-show="editing" type="text" ng-model="actor.height" class="line-2 profile-input" />
+            <h2 ng-hide="editing" class="text-capitalize gold line-3">Weight : {{actor.weight}}</h2>
+            <input ng-show="editing" type="text" ng-model="actor.weight" class="line-3 profile-input" />
+            <h2 ng-hide="editing" class="text-capitalize gold line-4">Hair color : {{actor.hair_color}}</h2>
+            <input ng-show="editing" type="text" ng-model="actor.hair_color" class="line-4 profile-input" />
+            <h2 ng-hide="editing" class="text-capitalize gold line-5">Skin color : {{actor.skin_color}}</h2>
+            <input ng-show="editing" type="text" ng-model="actor.skin_color" class="line-5 profile-input" />
+            <h2 ng-hide="editing" class="text-capitalize gold line-6">Eye color : {{actor.eye_color}}</h2>
+            <input ng-show="editing" type="text" ng-model="actor.eye_color" class="line-6 profile-input" />
+            <button ng-show="editing" class="btn btn-profile" type="submit" ng-click="submitInfo()"> save </button>
+        </form>
+        <form ng-submit="submitInfo(actor)" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 col-lg-offset-3 col-md-offset-3 col-sm-offset-3 col-xs-offset-3 tags animation" ng-show="tags" ng-hide="charactristics || experiences">
+            <h2><u class="gold title">Tags</u><img ng-click="editing = true" class="edit title" src="images/edit-09.svg"></h2>
+            <div ng-repeat="tag in actor.tags | limitTo:6">
+                <h2 ng-hide="editing" class="text-capitalize gold line-{{$index + 1}}">{{tag.tag}}</h2>
+                <input ng-show="editing" type="text" ng-model="tag.tag" class=" profile-input line-{{$index + 1}}" />
+            </div>
+            <button ng-show="editing" class="btn btn-profile" type="submit" ng-click="submitInfo()"> save </button>
+        </form>
+        <form ng-submit="submitInfo(actor)" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 col-lg-offset-3 col-md-offset-3 col-sm-offset-3 col-xs-offset-3 experiences animation" ng-show="experiences" ng-hide=" charactristics || tags">
+            <h2><u class="gold title">Experiences</u><img ng-click="editing = true" class="edit title" src="images/edit-09.svg"></h2>
+            <div ng-repeat="experience in actor.experiences | limitTo:6">
+                <h2 ng-hide="editing" class="text-capitalize gold line-{{$index + 1}}">{{experience.experience}}</h2>
+                <input ng-show="editing" type="text" ng-model="experience.experience" class=" profile-input line-{{$index + 1}}" />
+            </div>
+            <button ng-show="editing" class="btn btn-profile" type="submit" ng-click="submitInfo()"> save </button>
+        </form>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 col-lg-offset-2 col-md-offset-2 col-sm-offset-2 col-xs-offset-2 profile-picture-div" dir="rtl">
+            <div class="row pic-edit">
+                <img src="images/edit-09.svg" popover-placement="left" popover-template="dynamicPopover.templateUrl" popover-title="{{dynamicPopover.title}}" style="padding-bottom:1em;">
+            </div>
+            <div class="row picture-row">
+                <img id="img" src="{{actor.profile_picture}}" width="200px" height="300px" class="picture">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row row-fixed">
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 crew clickable" ng-click="">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 blue text-center">
+            <label>ADD TO YOUR CREW</label>
         </div>
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <form ng-submit="submitInfo(actor)" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 col-lg-offset-3 col-md-offset-3 col-sm-offset-3 col-xs-offset-3 charactristics animation" ng-show="charactristics" ng-hide=" tags || experiences">
-                <h2><u class="gold title">Charactristics</u><img ng-click="editing = true" class="edit title" src="images/edit-09.svg"></h2>
-                <h2 ng-hide="editing" class="text-capitalize gold line-1">{{actor.gender}}</h2>
-                <input ng-show="editing" type="text" ng-model="actor.gender" class="line-1 profile-input" />
-                <h2 ng-hide="editing" class="text-capitalize gold line-2"> Height : {{actor.height}}</h2>
-                <input ng-show="editing" type="text" ng-model="actor.height" class="line-2 profile-input" />
-                <h2 ng-hide="editing" class="text-capitalize gold line-3">Weight : {{actor.weight}}</h2>
-                <input ng-show="editing" type="text" ng-model="actor.weight" class="line-3 profile-input" />
-                <h2 ng-hide="editing" class="text-capitalize gold line-4">Hair color : {{actor.hair_color}}</h2>
-                <input ng-show="editing" type="text" ng-model="actor.hair_color" class="line-4 profile-input" />
-                <h2 ng-hide="editing" class="text-capitalize gold line-5">Skin color : {{actor.skin_color}}</h2>
-                <input ng-show="editing" type="text" ng-model="actor.skin_color" class="line-5 profile-input" />
-                <h2 ng-hide="editing" class="text-capitalize gold line-6">Eye color : {{actor.eye_color}}</h2>
-                <input ng-show="editing" type="text" ng-model="actor.eye_color" class="line-6 profile-input" />
-                <button ng-show="editing" class="btn btn-profile" type="submit"> save </button>
-            </form>
-            <form ng-submit="submitInfo(actor)" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 col-lg-offset-3 col-md-offset-3 col-sm-offset-3 col-xs-offset-3 tags animation" ng-show="tags" ng-hide="charactristics || experiences">
-                <h2><u class="gold title">Tags</u><img ng-click="editing = true" class="edit title" src="images/edit-09.svg"></h2>
-                <div ng-repeat="tag in actor.tags by $index">
-                    <h2 ng-hide="editing" class="text-capitalize gold" ng-class="line-{{$index + 1}}">{{tag}}</h2>
-                    <input ng-show="editing" type="text" ng-model="tag" ng-class="line-{{$index + 1}}"/>
-                </div>
-                <button ng-show="editing" class="btn btn-profile" type="submit"> save </button>
-            </form>
-            <form ng-submit="submitInfo(actor)" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 col-lg-offset-3 col-md-offset-3 col-sm-offset-3 col-xs-offset-3 experiences animation" ng-show="experiences" ng-hide=" charactristics || tags">
-                <h2><u class="gold title">Experiences</u><img ng-click="editing = true" class="edit title" src="images/edit-09.svg"></h2>
-                <div ng-repeat="experience in actor.experience">
-                    <h2 ng-hide="editing" class="text-capitalize gold">{{experience}}</h2>
-                    <input ng-show="editing" type="text" ng-model="experience" />
-                </div>
-                <button ng-show="editing" class="btn btn-profile" type="submit"> save </button>
-            </form>
-            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 col-lg-offset-2 col-md-offset-2 col-sm-offset-2 col-xs-offset-2 profile-picture-div" dir="rtl">
-                <div class="row pic-edit">
-                    <img src="images/edit-09.svg" popover-placement="left" popover-template="dynamicPopover.templateUrl" popover-title="{{dynamicPopover.title}}" style="padding-bottom:1em;">
-                </div>
-                <div class="row picture-row">
-                    <img id="img" src="{{actor.profile_picture}}" width="200px" height="300px" class="picture">
-                </div>
-            </div>
+            <img src="images/addtocrew-08.svg">
         </div>
     </div>
-    <div class="row row-fixed">
-        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 crew clickable" ng-click="">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 blue text-center">
-                <label>ADD TO YOUR CREW</label>
-            </div>
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <img src="images/addtocrew-08.svg">
-            </div>
-        </div>
-        <div class="circle col-lg-2 col-md-2 col-sm-2 col-xs-2  col-lg-offset-2 col-md-offset-2 col-sm-offset-2 col-xs-offset-2 text-center" ng-click="animate()">
-            <span class="glyphicon glyphicon-triangle-bottom gold"></span>
-        </div>
+    <div class="circle col-lg-2 col-md-2 col-sm-2 col-xs-2  col-lg-offset-2 col-md-offset-2 col-sm-offset-2 col-xs-offset-2 text-center" ng-click="animate()">
+        <span class="glyphicon glyphicon-triangle-bottom gold"></span>
     </div>
+</div>

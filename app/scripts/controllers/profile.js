@@ -41,7 +41,6 @@ app
 
 
                         $http.put(HOSTED_URL + '/api/actor/' + $stateParams.id + '/', $scope.actor).success(function() {
-                            console.log('peeep');
                         });
                     }, function(response) {
                         console.log('CSRF FAILED: ', response);
@@ -72,14 +71,13 @@ app
 
 
 
-                $http.put(HOSTED_URL + '/api/actor/' + $stateParams.id + '/', actor).success(function() {
-                    console.log('peeep');
+                $http.put(HOSTED_URL + '/api/actor/' + $stateParams.id + '/', $scope.actor).success(function() {
                 });
 
             }, function(response) {
                 console.log('CSRF FAILED: ', response);
             })
-        }
+        };
         $scope.animate = function() {
             if ($scope.charactristics) {
                 $scope.charactristics = false
