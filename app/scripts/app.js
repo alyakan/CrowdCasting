@@ -67,6 +67,10 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
             templateUrl: "views/signup.html",
             controller: "SignupCtrl"
         })
+        .state('search', {
+            url: "/search",
+            templateUrl: "views/search.html"
+        })
 
 
 }).run(function($http, $cookies) {

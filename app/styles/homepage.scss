@@ -1,0 +1,48 @@
+.middle {
+    position: absolute;
+    top: 40%;
+    left: 5%;
+}
+
+.square {
+    width: 250px;
+    height: 250px;
+}
+
+.img-hover {
+    &:hover {
+        .square {
+            width: 280px;
+            height: 280px;
+            position: relative;
+            left: -5%;
+            filter: invert(60%);
+        }
+    }
+}
+
+.search-row {
+margin-bottom: 50px;
+}
+
+.search-hover {
+    .square {
+        width: 150px;
+        height: 150px;
+    }
+    &:hover {
+        .square {
+            width: 180px;
+            height: 180px;
+            position: relative;
+            left: -5%;
+            filter: invert(60%);
+        }
+    }
+}
+
+.search-middle {
+    position: absolute;
+    top: 30%;
+    left:7%;
+}
