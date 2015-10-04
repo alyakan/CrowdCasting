@@ -70,6 +70,10 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
         .state('search', {
             url: "/search",
             templateUrl: "views/search.html"
+        }).state('checkout', {
+            url: '/checkout',
+            templateUrl: 'views/checkout.html',
+            controller: 'CheckoutCtrl'
         })
 
 
